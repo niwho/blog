@@ -194,6 +194,714 @@
           
           
             
+              <a class="post-title-link" href="/2014/10/21/linux/make 使用/" itemprop="url">
+                Makefile模板
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-10-21T20:55:10+08:00" content="2014-10-21">
+            2014-10-21
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/program/" itemprop="url" rel="index"><span itemprop="name">program</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/10/21/linux/make 使用/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/10/21/linux/make 使用/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h1 id="Makefile_Template">Makefile Template</h1><h3 id="使用：直接放到工程目录下，_根据工程添加_可能修改INC_LIBS_甚至编译选项_C*FLAGS_,然后make即可">使用：直接放到工程目录下， 根据工程添加 可能修改INC LIBS 甚至编译选项 C*FLAGS ,然后make即可</h3><pre><code><span class="symbol">:</span><span class="symbol">:</span><span class="symbol">:make</span>
+<span class="constant">BIN</span> = test
+<span class="constant">CC</span> = gcc
+<span class="constant">CPP</span> = g++
+<span class="comment">#这里只加入库头文件路径及库路径 根据工程添加 可能修改INC LIBS 甚至编译选项 C*FLAGS </span>
+<span class="constant">INCS</span> = -<span class="constant">I</span><span class="string">"/usr/local/include"</span>
+<span class="constant">LIBS</span> = -<span class="constant">L</span><span class="string">"/usr/local/lib"</span>
+<span class="constant">SUBDIRS</span> =
+<span class="comment">#生成依赖信息时的搜索目录，比如到下列目录中搜索一个依赖文件(比如.h文件)，例如 -I"./***/" -I"./base/"</span>
+<span class="constant">DEFINC</span> =
+<span class="comment">#给INCS加上依赖搜索路径，分开写可能会产生不一致情况，而且繁琐</span>
+<span class="constant">INCS</span> += <span class="variable">$(</span><span class="constant">DEFINC</span>)
+<span class="comment">#</span>
+<span class="comment">#maintest.c tree/rbtree.c  多了子目录，那就直接添加 目录/*.c即可   所有的源文件--  .c文件列表</span>
+<span class="constant">CSRCS</span> = <span class="variable">$(</span>wildcard ./*.c)
+<span class="constant">CPPSRCS</span> = <span class="variable">$(</span>wildcard ./*.cpp)
+<span class="comment">#SRCS += $(wildcard ./../base/*.c)</span>
+<span class="comment">#SRCS += $(wildcard ./*.c ./src/*.c ./src/base/*.c ./src/base/tree/*.c ./src/mem/*.c)</span>
+
+<span class="comment">#所有的.o文件列表</span>
+<span class="constant">COBJS</span> <span class="symbol">:</span>= <span class="variable">$(</span><span class="constant">CSRCS</span><span class="symbol">:</span>.c=.o)
+<span class="constant">CPPOBJS</span> <span class="symbol">:</span>= <span class="variable">$(</span><span class="constant">CPPSRCS</span><span class="symbol">:</span>.cpp=.o)
+
+<span class="comment">#编译选项，可默认使用</span>
+<span class="constant">CFLAGS</span> += <span class="variable">$(</span><span class="constant">INCS</span>)
+<span class="constant">CFLAGS</span> += -<span class="constant">O2</span> -<span class="constant">Wall</span> -fomit-frame-pointer -g -ansi
+<span class="constant">CPPFLAGS</span> += <span class="variable">$(</span><span class="constant">INCS</span>)
+<span class="constant">CPPFLAGS</span> += -<span class="constant">O2</span> -<span class="constant">Wall</span> -g
+<span class="comment">#-g 生成调试信息</span>
+<span class="comment">#-pedantic参数与-ansi一起使用 会自动拒绝编译非ANSI程序</span>
+<span class="comment">#-fomit-frame-pointer 去除函数框架</span>
+<span class="comment">#-Wmissing-prototypes -Wstrict-prototypes 检查函数原型</span>
+<span class="comment">#针对每个.c文件的.d依赖文件列表</span>
+<span class="constant">CDEF</span> = <span class="variable">$(</span><span class="constant">CSRCS</span><span class="symbol">:</span>.c=.d)
+<span class="constant">CPPDEF</span> = <span class="variable">$(</span><span class="constant">CPPSRCS</span><span class="symbol">:</span>.cpp=.d)
+
+<span class="symbol">all:</span><span class="variable">$(</span><span class="constant">BIN</span>)
+
+<span class="comment">#自动生成依赖，并且*.d自动更新，参照make写法</span>
+<span class="variable">$(</span><span class="constant">CDEF</span>) <span class="symbol">:</span> %.d <span class="symbol">:</span> %.c
+    set -e;rm -f <span class="variable">$@</span>; \
+    <span class="variable">$(</span><span class="constant">CC</span>) -<span class="constant">MM</span>  <span class="variable">$&lt;</span> &gt; <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span>; \
+    sed <span class="string">'s,\($*\)\.o[ :]*,\1.o $@ : ,g'</span> &lt; <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span> &gt; <span class="variable">$@</span>; \
+    rm -f <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span>
+<span class="variable">$(</span><span class="constant">CPPDEF</span>) <span class="symbol">:</span> %.d <span class="symbol">:</span> %.cpp
+    set -e;rm -f <span class="variable">$@</span>; \
+    <span class="variable">$(</span><span class="constant">CC</span>) -<span class="constant">MM</span>  <span class="variable">$&lt;</span> &gt; <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span>; \
+    sed <span class="string">'s,\($*\)\.o[ :]*,\1.o $@ : ,g'</span> &lt; <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span> &gt; <span class="variable">$@</span>; \
+    rm -f <span class="variable">$@</span>.<span class="variable">$$</span><span class="variable">$$</span>
+
+<span class="comment"># 链接为最终目标</span>
+<span class="variable">$(</span><span class="constant">BIN</span>) <span class="symbol">:</span> <span class="variable">$(</span><span class="constant">COBJS</span>) <span class="variable">$(</span><span class="constant">CPPOBJS</span>)
+    <span class="variable">$(</span><span class="constant">CPP</span>) -o <span class="variable">$(</span><span class="constant">BIN</span>) <span class="variable">$(</span><span class="constant">COBJS</span>) <span class="variable">$(</span><span class="constant">CPPOBJS</span>) <span class="variable">$(</span><span class="constant">LIBS</span>)
+<span class="comment">#rm -f $(COBJS)</span>
+<span class="comment">#rm -f $(CPPOBJS)</span>
+<span class="comment">#rm -f $(CDEF)</span>
+<span class="comment">#rm -f $(CPPDEF)</span>
+<span class="comment">#</span>
+<span class="comment">#导入依赖</span>
+sinclude <span class="variable">$(</span><span class="constant">CDEF</span>)
+sinclude <span class="variable">$(</span><span class="constant">CPPDEF</span>)
+
+.<span class="constant">PHONY</span><span class="symbol">:clean</span> cleanall
+<span class="comment">#清除所有目标文件以及生成的最终目标文件</span>
+<span class="comment">#保留依赖*.d文件</span>
+<span class="symbol">clean:</span>            
+    rm -f <span class="variable">$(</span><span class="constant">BIN</span>) 
+    rm -f <span class="variable">$(</span><span class="constant">COBJS</span>) 
+    rm -f <span class="variable">$(</span><span class="constant">CPPOBJS</span>)
+<span class="comment">#清楚除源文件意外的所有编译生成的文件</span>
+<span class="symbol">cleanall:</span>
+    rm -f <span class="variable">$(</span><span class="constant">CDEF</span>) <span class="variable">$(</span><span class="constant">CPPDEF</span>)
+    rm -f <span class="variable">$(</span><span class="constant">BIN</span>) <span class="variable">$(</span><span class="constant">COBJS</span>) <span class="variable">$(</span><span class="constant">CPPOBJS</span>)
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/26/python/py序列化/" itemprop="url">
+                py序列化
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-26T09:30:25+08:00" content="2014-06-26">
+            2014-06-26
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/py序列化/" itemprop="url" rel="index"><span itemprop="name">py序列化</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/06/26/python/py序列化/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/26/python/py序列化/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="使用cPickle库">使用cPickle库</h3></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/25/python/py库-hashlib-md5/" itemprop="url">
+                python-md5
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-25T10:35:12+08:00" content="2014-06-25">
+            2014-06-25
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/py-lib-hashlib-md5/" itemprop="url" rel="index"><span itemprop="name">py-lib-hashlib-md5</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/06/25/python/py库-hashlib-md5/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/25/python/py库-hashlib-md5/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="MD5">MD5</h3><pre><code>:::python linenos=<span class="string">'table'</span> linenums=True
+
+import hashlib
+import os
+
+#简单的测试一个字符串的MD5值
+src = <span class="string">'teststring'</span>
+print (hashlib.<span class="function"><span class="title">md5</span><span class="params">(src)</span></span>.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>)
+#<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span> 为十六进制值，<span class="function"><span class="title">digest</span><span class="params">()</span></span>为二进制值
+
+#使用update
+m0=hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+m0.<span class="function"><span class="title">update</span><span class="params">(src)</span></span>
+print m0.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+
+#一个小文件的MD5值
+filename = <span class="string">'c:\\boot.ini'</span>
+f = <span class="function"><span class="title">file</span><span class="params">(filename,<span class="string">'rb'</span>)</span></span>
+m1 = hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+m1.<span class="function"><span class="title">update</span><span class="params">(f.read(<span class="number">8096</span>)</span></span>)
+print m1.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+f.<span class="function"><span class="title">close</span><span class="params">()</span></span>
+
+#大文件的MD5值
+def <span class="function"><span class="title">GetFileMd5</span><span class="params">(filename)</span></span>:
+    <span class="keyword">if</span> not os<span class="class">.path</span><span class="class">.isfile</span>(filename):
+    return
+myhash = hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+f = <span class="function"><span class="title">file</span><span class="params">(filename,<span class="string">'rb'</span>)</span></span>
+while True:
+    <span class="tag">b</span> = f.<span class="function"><span class="title">read</span><span class="params">(<span class="number">8096</span>)</span></span>
+    <span class="keyword">if</span> not <span class="tag">b</span> :
+        break
+    myhash.<span class="function"><span class="title">update</span><span class="params">(b)</span></span>
+f.<span class="function"><span class="title">close</span><span class="params">()</span></span>
+return myhash.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+
+print <span class="function"><span class="title">GetFileMd5</span><span class="params">(<span class="string">"c:\\a.rar"</span>)</span></span>
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/25/python/py脚本打包/" itemprop="url">
+                py脚本打包
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-25T10:35:12+08:00" content="2014-06-25">
+            2014-06-25
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/py脚本打包/" itemprop="url" rel="index"><span itemprop="name">py脚本打包</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/06/25/python/py脚本打包/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/25/python/py脚本打包/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>使用<a href="http://http://www.py2exe.org/" target="_blank" rel="external">py2exe</a>，可打包为单个文件，打包后程序启动快，比pyinstaller快太多了。<br>    setup 文件示例参考</p>
+<pre><code>:::python linenos=<span class="symbol">'table'</span> linenums=<span class="type">True</span>
+from distutils.core import setup
+import py2exe
+#setup(console=[<span class="symbol">'hello</span>.py'])
+
+options = {<span class="string">"py2exe"</span>: 
+{   <span class="string">"compressed"</span>:<span class="number">1</span>, 
+    <span class="string">"optimize"</span>: <span class="number">2</span>, 
+    #<span class="string">"includes"</span>: includes, 
+    <span class="string">"bundle_files"</span>:<span class="number">1</span>,
+    <span class="string">"dll_excludes"</span>: [ <span class="string">"MSVCP90.dll"</span>, <span class="string">"mswsock.dll"</span>, <span class="string">"powrprof.dll"</span>,<span class="string">"w9xpopen.exe"</span>
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">ErrorHandling</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">File</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">IO</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">LibraryLoader</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Handle</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Heap</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Interlocked</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Localization</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Memory</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Misc</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">ProcessThreads</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Profile</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">String</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">Synch</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">SysInfo</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll',
+              <span class="symbol">'API</span>-<span class="type">MS</span>-<span class="type">Win</span>-<span class="type">Core</span>-<span class="type">ErrorHandling</span>-<span class="type">L1</span>-<span class="number">1</span>-<span class="number">0.</span>dll'
+              ]
+} 
+} 
+
+setup(version = <span class="string">"1.0.0"</span>, 
+    description = <span class="string">"网格作业提交"</span>, 
+    name = <span class="string">"netposaJobCommit"</span>, 
+    options = options, 
+    zipfile = <span class="type">None</span> 
+  ,windows=[{<span class="symbol">'script'</span>:<span class="symbol">'pcc_gui</span>.py'
+            ,<span class="symbol">'icon_resources'</span>: [(<span class="number">1</span>, <span class="char">'13_e.ico'</span>)]
+            #,<span class="symbol">'dll_excludes'</span>: [ <span class="string">"mswsock.dll"</span>, <span class="string">"powrprof.dll"</span> ]
+            }])
+</code></pre><h3 id="错误诊断：">错误诊断：</h3><blockquote>
+<p>File “zipextimporter.pyo”, line 98, in load_module<br>ImportError: MemoryLoadLibrary failed loading PCCUserppyy.pyd</p>
+</blockquote>
+<pre><code>:::python 
+<span class="string">r"""zipextimporter - an importer which can import extension modules from zipfiles
+
+This file and also _memimporter.pyd is part of the py2exe package.
+
+Overview
+========
+
+zipextimporter.py contains the ZipExtImporter class which allows to
+load Python binary extension modules contained in a zip.archive,
+without unpacking them to the file system.
+
+Call the zipextimporter.install() function to install the import hook,
+add a zip-file containing .pyd or .dll extension modules to sys.path,
+and import them.
+
+It uses the _memimporter extension which uses code from Joachim
+Bauch's MemoryModule library.  This library emulates the win32 api
+function LoadLibrary.
+
+Sample usage
+============
+
+You have to prepare a zip-archive 'lib.zip' containing
+your Python's _socket.pyd for this example to work.
+
+<span class="prompt">&gt;&gt;&gt; </span>import zipextimporter
+<span class="prompt">&gt;&gt;&gt; </span>zipextimporter.install()
+<span class="prompt">&gt;&gt;&gt; </span>import sys
+<span class="prompt">&gt;&gt;&gt; </span>sys.path.insert(0, "lib.zip")
+<span class="prompt">&gt;&gt;&gt; </span>import _socket
+<span class="prompt">&gt;&gt;&gt; </span>print _socket
+&lt;module '_socket' from 'lib.zip\_socket.pyd'&gt;
+<span class="prompt">&gt;&gt;&gt; </span>_socket.__file__
+'lib.zip\\_socket.pyd'
+<span class="prompt">&gt;&gt;&gt; </span>_socket.__loader__
+&lt;ZipExtensionImporter object 'lib.zip'&gt;
+<span class="prompt">&gt;&gt;&gt; </span># Reloading also works correctly:
+<span class="prompt">&gt;&gt;&gt; </span>_socket is reload(_socket)
+True
+&gt;&gt;&gt;
+
+"""</span>
+<span class="keyword">import</span> imp, sys
+<span class="keyword">import</span> zipimport
+<span class="keyword">import</span> _memimporter
+_memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class="number">3</span>
+
+<span class="class"><span class="keyword">class</span> <span class="title">ZipExtensionImporter</span><span class="params">(zipimport.zipimporter)</span>:</span>
+    _suffixes = [s[<span class="number">0</span>] <span class="keyword">for</span> s <span class="keyword">in</span> imp.get_suffixes() <span class="keyword">if</span> s[<span class="number">2</span>] == imp.C_EXTENSION]
+
+    <span class="function"><span class="keyword">def</span> <span class="title">find_module</span><span class="params">(self, fullname, path=None)</span>:</span>
+        result = zipimport.zipimporter.find_module(self, fullname, path)
+        <span class="keyword">if</span> result:
+            <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+                sys.stderr.write(<span class="string">"find_module: found %s by standard zipimport\n"</span> % (fullname))
+            <span class="keyword">return</span> result
+        <span class="keyword">if</span> fullname <span class="keyword">in</span> (<span class="string">"pywintypes"</span>, <span class="string">"pythoncom"</span>):
+            fullname = fullname + <span class="string">"%d%d"</span> % sys.version_info[:<span class="number">2</span>]
+            fullname = fullname.replace(<span class="string">"."</span>, <span class="string">"\\"</span>) + <span class="string">".dll"</span>
+            <span class="keyword">if</span> fullname <span class="keyword">in</span> self._files:
+                <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+                    sys.stderr.write(<span class="string">"find_module: found %s by py2exe hack\n"</span> % (fullname))
+                <span class="keyword">return</span> self
+        <span class="keyword">else</span>:
+            fullname = fullname.replace(<span class="string">"."</span>, <span class="string">"\\"</span>)
+            <span class="keyword">for</span> s <span class="keyword">in</span> self._suffixes:
+                <span class="keyword">if</span> (fullname + s) <span class="keyword">in</span> self._files:
+                    <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+                        sys.stderr.write(<span class="string">"find_module: found %s by py2exe with %s extension\n"</span> % (fullname, s))
+                    <span class="keyword">return</span> self
+        <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+            sys.stderr.write(<span class="string">"find_module: not found %s by py2exe\n"</span> % (fullname))
+        <span class="keyword">return</span> <span class="keyword">None</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">locate_dll_image</span><span class="params">(self, name)</span>:</span>
+        <span class="comment"># A callback function for_memimporter.import_module.  Tries to</span>
+        <span class="comment"># locate additional dlls.  Returns the image as Python string,</span>
+        <span class="comment"># or None if not found.</span>
+        <span class="keyword">if</span> name <span class="keyword">in</span> self._files:
+            <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+                sys.stderr.write(<span class="string">"locate_dll_image: %s - yes\n"</span> % (name))
+            <span class="keyword">return</span> self.get_data(name)
+        <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+            sys.stderr.write(<span class="string">"locate_dll_image: %s - no\n"</span> % (name))
+        <span class="keyword">return</span> <span class="keyword">None</span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">load_module</span><span class="params">(self, fullname)</span>:</span>
+        <span class="keyword">if</span> sys.modules.has_key(fullname):
+            mod = sys.modules[fullname]
+            <span class="keyword">if</span> _memimporter.get_verbose_flag():
+                sys.stderr.write(<span class="string">"load_module: import %s # previously loaded from zipfile %s\n"</span> % (fullname, self.archive))
+            <span class="keyword">return</span> mod
+        _memimporter.set_find_proc(self.locate_dll_image)
+        <span class="keyword">try</span>:
+            <span class="keyword">return</span> zipimport.zipimporter.load_module(self, fullname)
+        <span class="keyword">except</span> zipimport.ZipImportError:
+            <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+                sys.stderr.write(<span class="string">"load_module: standard zipimport failed\n"</span>)
+            <span class="keyword">pass</span>
+        <span class="keyword">if</span> _memimporter.get_verbose_flag() &gt; <span class="number">2</span>:
+            sys.stderr.write(<span class="string">"load_module: %s is not loaded by standard zipimport\n"</span> % (fullname))
+        initname = <span class="string">"init"</span> + fullname.split(<span class="string">"."</span>)[-<span class="number">1</span>] <span class="comment"># name of initfunction</span>
+        filename = fullname.replace(<span class="string">"."</span>, <span class="string">"\\"</span>)
+        <span class="keyword">if</span> filename <span class="keyword">in</span> (<span class="string">"pywintypes"</span>, <span class="string">"pythoncom"</span>):
+            filename = filename + <span class="string">"%d%d"</span> % sys.version_info[:<span class="number">2</span>]
+            suffixes = (<span class="string">'.dll'</span>,)
+        <span class="keyword">else</span>:
+            suffixes = self._suffixes
+        <span class="keyword">for</span> s <span class="keyword">in</span> suffixes:
+            path = filename + s
+            <span class="keyword">if</span> path <span class="keyword">in</span> self._files:
+                <span class="keyword">if</span> _memimporter.get_verbose_flag():
+                    sys.stderr.write(<span class="string">"load_module: found %s in zipfile %s\n"</span> % (path, self.archive))
+                code = self.get_data(path)
+                mod = _memimporter.import_module(code, initname, fullname, path)
+                mod.__file__ = <span class="string">"%s\\%s"</span> % (self.archive, path)
+                mod.__loader__ = self
+                <span class="keyword">if</span> _memimporter.get_verbose_flag():
+                    sys.stderr.write(<span class="string">"load_module: %s is loaded from zipfile %s\n"</span> % (fullname, mod.__file__))
+                <span class="keyword">return</span> mod
+        <span class="keyword">raise</span> zipimport.ZipImportError, <span class="string">"can't find module %s"</span> % fullname
+
+    <span class="function"><span class="keyword">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span>
+        <span class="keyword">return</span> <span class="string">"&lt;%s object %r&gt;"</span> % (self.__class__.__name__, self.archive)
+
+<span class="function"><span class="keyword">def</span> <span class="title">install</span><span class="params">()</span>:</span>
+    <span class="string">"Install the zipextimporter"</span>
+    sys.path_hooks.insert(<span class="number">0</span>, ZipExtensionImporter)
+    sys.path_importer_cache.clear()
+
+<span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:
+<span class="comment">##    import doctest</span>
+<span class="comment">##    doctest.testmod()</span>
+    <span class="comment">#import testpyd</span>
+    <span class="keyword">print</span> <span class="string">'aaaaa'</span>
+    install()
+    <span class="keyword">import</span> sys
+    sys.path.insert(<span class="number">0</span>,<span class="string">r"D:\bi4Al31dN8\workspace\Pyproj\tmp3\gui_exe.exe"</span>)
+    <span class="keyword">import</span> testpyd
+    <span class="keyword">import</span> PCCUserppyy
+    <span class="comment">#import PCCUserppyy</span>
+    <span class="keyword">print</span> <span class="string">'sssss'</span>
+</code></pre><h3 id="问题所在">问题所在</h3><blockquote>
+<p>API-MS-Win-Core-*.dll的动态库包含应当去掉</p>
+</blockquote>
+<h3 id="py2exe打包时，如果py有依赖egg格式的库，会有ImportError:_No_module_named_xxx的错误">py2exe打包时，如果py有依赖egg格式的库，会有ImportError: No module named xxx的错误</h3><p>&gt;<br>&gt;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/12/programing/map/" itemprop="url">
+                map 元素删除
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-12T18:29:07+08:00" content="2014-06-12">
+            2014-06-12
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/06/12/programing/map/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/12/programing/map/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><pre><code><span class="type">int</span> main(<span class="type">int</span> argc, <span class="type">char</span>* argv[])  
+{  
+    map&lt;<span class="type">string</span>, <span class="type">string</span>&gt; mapData;  
+
+    mapData[<span class="string">"a"</span>] = <span class="string">"aaa"</span>;   
+    mapData[<span class="string">"b"</span>] = <span class="string">"bbb"</span>;   
+    mapData[<span class="string">"c"</span>] = <span class="string">"ccc"</span>;   
+
+
+    <span class="keyword">for</span> (map&lt;<span class="type">string</span>, <span class="type">string</span>&gt;::<span class="keyword">iterator</span> i=mapData.begin(); i!=mapData.<span class="keyword">end</span>(); /*i++*/)  
+    {  
+        <span class="keyword">if</span> (i-&gt;first == <span class="string">"b"</span>)  
+        {  
+        mapData.erase(i++);  
+        }  
+        <span class="keyword">else</span>  
+        {  
+            i++;  
+        }  
+    }  
+    <span class="keyword">return</span> <span class="number">0</span>;  
+}
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/06/11/programing/process/" itemprop="url">
                 进程管理
               </a>
@@ -523,6 +1231,99 @@
 
 
     
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/05/25/python/python模块定义/" itemprop="url">
+                python扩展模块定义
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-25T10:35:12+08:00" content="2014-05-25">
+            2014-05-25
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+              
+              
+                ， 
+              
+
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/cplusplus/" itemprop="url" rel="index"><span itemprop="name">cplusplus</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/05/25/python/python模块定义/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/25/python/python模块定义/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<p><a href="git@github.com:niwho/pccuserppyy.git">python c++扩展</a></p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>Methodtable及入口定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyMethodDef PCCMethods[] = &#123;</span><br><span class="line">	</span><br><span class="line">	&#123;<span class="string">"Init"</span>,  Init, METH_VARARGS, <span class="string">"初始化"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"UnInit"</span>,  UnInit, METH_VARARGS, <span class="string">"卸载"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"SetServeIPP"</span>,  SetServeIPP, METH_VARARGS, <span class="string">"建立连接"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"SetJobCallback"</span>,  SetJobCallback, METH_VARARGS, <span class="string">"设置回调函数"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListTrunk"</span>,  ListTrunk, METH_VARARGS, <span class="string">"列举trunk"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListModules"</span>,  ListModules, METH_VARARGS, <span class="string">"列举模块"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListModels"</span>,  ListModels, METH_VARARGS, <span class="string">"列举模型"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"Execute"</span>,  Execute, METH_VARARGS, <span class="string">"提交作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobs"</span>,  QueryJobs, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobsOnDoing"</span>,  QueryJobsOnDoing, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobsByID"</span>,  QueryJobsByID, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"CancelJobs"</span>,  CancelJobs, METH_VARARGS, <span class="string">"取消作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testCallback"</span>,  testCallback, METH_VARARGS, <span class="string">"提交作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testcase1"</span>,  testcase1, METH_VARARGS, <span class="string">"测试用例"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testcase2"</span>,  testcase2, METH_VARARGS, <span class="string">"测试用例"</span>&#125;,</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	&#123;NULL, NULL, <span class="number">0</span>, NULL&#125;        <span class="comment">/* Sentinel */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">PyMODINIT_FUNC</span><br><span class="line"><span class="title">initPCCUserppyy</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	PyObject *m;</span><br><span class="line"></span><br><span class="line">	PyEval_InitThreads() ;</span><br><span class="line">	m = Py_InitModule(<span class="string">"PCCUserppyy"</span>, PCCMethods);</span><br><span class="line">	<span class="keyword">if</span> (m == NULL)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	PCCError = PyErr_NewException(<span class="string">"PCC.error"</span>, NULL, NULL);</span><br><span class="line">	Py_INCREF(PCCError);</span><br><span class="line">	PyModule_AddObject(m, <span class="string">"error"</span>, PCCError);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>导出接口定义示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyObject * ListModels(PyObject *self, PyObject *args)<span class="comment">//static keep function name local</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(gp_usr == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		PyErr_SetString(PCCError, <span class="string">"未初始化"</span>);</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sts;</span><br><span class="line">	<span class="comment">//INT64 jobkey;</span></span><br><span class="line">	PyObject *lt;</span><br><span class="line">	<span class="keyword">if</span> (!PyArg_ParseTuple(args, <span class="string">"O"</span>,&amp;lt))</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	<span class="keyword">if</span>(!PyList_Check(lt))</span><br><span class="line">	&#123;</span><br><span class="line">		PyErr_SetString(PCCError, <span class="string">"[ListModels][params] [List:check_error] "</span>);</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	tcps_Array&lt;PCC_ModelPropWithKey&gt; modelsInfo;</span><br><span class="line">	sts = _ListModels(modelsInfo);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(TCPS_OK == sts)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;modelsInfo.Length();++i)</span><br><span class="line">		&#123;</span><br><span class="line">			PyList_Append(lt,Py_BuildValue(<span class="string">"&#123;s:L,s:s,s:i&#125;"</span>,<span class="string">"id"</span>,modelsInfo[i].key</span><br><span class="line">				,<span class="string">"name"</span>,modelsInfo[i].prop.modelTag.name.Get(),<span class="string">"port"</span>,modelsInfo[i].prop.ipp.port_ ));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d,%s\n"</span>,sts,tcps_GetErrTxt((TCPSError)sts));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> PyLong_FromLong(sts);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>详见<a href="git@github.com:niwho/pccuserppyy.git">git</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -562,21 +1363,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">11</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
