@@ -194,6 +194,177 @@
           
           
             
+              <a class="post-title-link" href="/2014/11/27/python/python嵌入/" itemprop="url">
+                python 嵌入
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
+            2014-11-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/27/python/python嵌入/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/python嵌入/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<p>程序嵌入python</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>python api只能互斥调用，同样自动锁实现</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> PyThreadStateLock</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		state = PyGILState_Ensure( );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PyGILState_Release( state );</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	PyGILState_STATE state;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>异常处理宏统一定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PCC_ERR_HANDLE											\</span><br><span class="line">	PyObject *ptype, *pvalue0, *ptraceback;						\</span><br><span class="line">	PyErr_Fetch(&amp;ptype, &amp;pvalue0, &amp;ptraceback);					\</span><br><span class="line">	PyObject*objj = PyObject_GetAttrString(pvalue0,"args");		\</span><br><span class="line">	Py_DECREF(ptype);											\</span><br><span class="line">	Py_DECREF(pvalue0);											\</span><br><span class="line">	Py_DECREF(ptraceback);										\</span><br><span class="line">	const char* errmsg;											\</span><br><span class="line">	int err;													\</span><br><span class="line">	int t = PyArg_ParseTuple(objj, "si", &amp;errmsg,&amp;err );		\</span><br><span class="line">	<span class="keyword">if</span>(!t)														\</span><br><span class="line">	&#123;															\</span><br><span class="line">		Py_DECREF(objj);										\</span><br><span class="line">		PyErr_Print();											\</span><br><span class="line">		return -1;												\</span><br><span class="line">	&#125;															\</span><br><span class="line">	NPLogError(("%s",errmsg));									\</span><br><span class="line">	Py_DECREF(objj);											\</span><br><span class="line">	return err;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>初始化定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CPyScript::CPyScript(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> PYSUPORT</span></span><br><span class="line">	<span class="comment">// 初始化</span></span><br><span class="line">	Py_NoSiteFlag = <span class="number">1</span>; <span class="comment">//一定要加这一句</span></span><br><span class="line">	Py_Initialize();</span><br><span class="line">	<span class="comment">// 初始化线程支持</span></span><br><span class="line">	PyEval_InitThreads();</span><br><span class="line">	<span class="comment">// 启动子线程前执行，为了释放PyEval_InitThreads获得的全局锁，否则子线程可能无法获取到全局锁。</span></span><br><span class="line">	PyEval_ReleaseThread(PyThreadState_Get());</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/11/27/python/pcc_rest/" itemprop="url">
+                一个简单的RESTful api
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
+            2014-11-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/27/python/pcc_rest/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/pcc_rest/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<p><a href="https://github.com/niwho/pcc_rest" target="_blank" rel="external">gevent+bottle实现</a></p>
+</blockquote>
+<figure class="highlight python"><figcaption><span>修饰函数methodroute定义规则，routeapp根据函数名生成route</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">methodroute</span><span class="params">(route,method=<span class="string">'GET'</span>)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">decorator</span><span class="params">(f)</span>:</span></span><br><span class="line">        f.route = route</span><br><span class="line">        f.method = method</span><br><span class="line">        <span class="keyword">return</span> f</span><br><span class="line">    <span class="keyword">return</span> decorator</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">routeapp</span><span class="params">(obj)</span>:</span></span><br><span class="line">    <span class="keyword">for</span> kw <span class="keyword">in</span> dir(obj):</span><br><span class="line">        <span class="comment">#print kw,type(kw)</span></span><br><span class="line">        attr = getattr(obj, kw)</span><br><span class="line">        <span class="keyword">if</span> hasattr(attr, <span class="string">'route'</span>):</span><br><span class="line">            <span class="comment">#print 'aaaa:',kw,attr.route</span></span><br><span class="line">            ll = kw.split(<span class="string">'_'</span>)</span><br><span class="line">            ll.insert(<span class="number">0</span>,<span class="string">'/pcc'</span>)</span><br><span class="line">            path = <span class="string">'/'</span>.join(ll)</span><br><span class="line">            <span class="keyword">print</span> path,kw,attr.route,<span class="string">'@'</span>,attr.route <span class="keyword">or</span> path,attr.method </span><br><span class="line">            bottle.route(attr.route <span class="keyword">or</span> path,method= attr.method <span class="keyword">or</span> <span class="string">'GET'</span>)(attr)<span class="comment">#)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>异常及通用处理包装（使用修饰）：授权验证及异常处理</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCCException</span><span class="params">(PCCUserppyy.error)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,errcode,errmsg)</span>:</span></span><br><span class="line">        self.err=[]</span><br><span class="line">        self.err.append(errcode)</span><br><span class="line">        self.err.append(errmsg)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self,idx)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.err[idx]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> repr(self.err)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">authed</span><span class="params">(met)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args)</span>:</span></span><br><span class="line">        output=&#123;&#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            obj = args[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">assert</span> isinstance(obj,PCC)</span><br><span class="line">            rt,des = obj.auth.validate(request.query.token)</span><br><span class="line">            <span class="keyword">if</span> rt&gt;-<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> met(*args) <span class="comment">#这里格式自定</span></span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=rt</span><br><span class="line">            output[<span class="string">'error'</span>]=des</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">        <span class="keyword">except</span> PCCUserppyy.error,e:</span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=e[<span class="number">0</span>]</span><br><span class="line">            output[<span class="string">'error'</span>]=e[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            <span class="keyword">print</span> traceback.format_exc()</span><br><span class="line">            <span class="keyword">print</span> e</span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=-<span class="number">1</span></span><br><span class="line">            <span class="comment">#print '$$$$',e</span></span><br><span class="line">            output[<span class="string">'error'</span>]=str(e)</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><figcaption><span>业务类定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCC</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config=&#123;&#125;)</span>:</span></span><br><span class="line">        self.config = config</span><br><span class="line">        routeapp(self)</span><br><span class="line">        </span><br><span class="line">        self.auth = auth.Auth()</span><br><span class="line">        </span><br><span class="line">        LOG_FILE = <span class="string">'%s.log'</span>%(time.strftime(<span class="string">'%Y-%m-%d %A %H-%M-%S'</span>,time.localtime(time.time())),)<span class="comment">#'tst.log'  </span></span><br><span class="line">  </span><br><span class="line">        handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes = <span class="number">1024</span>*<span class="number">1024</span>) <span class="comment"># 实例化handler   </span></span><br><span class="line">        fmt = <span class="string">'%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'</span>  </span><br><span class="line">  </span><br><span class="line">        formatter = logging.Formatter(fmt)   <span class="comment"># 实例化formatter  </span></span><br><span class="line">        handler.setFormatter(formatter)      <span class="comment"># 为handler添加formatter  </span></span><br><span class="line">  </span><br><span class="line">        self.logger = logging.getLogger(<span class="string">'pcc'</span>)    <span class="comment"># 获取名为tst的logger  </span></span><br><span class="line">        self.logger.addHandler(handler)           <span class="comment"># 为logger添加handler  </span></span><br><span class="line">        self.logger.setLevel(logging.DEBUG)  </span><br><span class="line">        </span><br><span class="line">        self.charsetmatch = re.compile(<span class="string">r'charset=([\w-]+)'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        PCCUserppyy.Init()</span><br><span class="line">        cf = ConfigParser.SafeConfigParser()</span><br><span class="line">        cf.read(<span class="string">r'./conf.ini'</span>)</span><br><span class="line">        ipp=cf.get(<span class="string">'PCC'</span>,<span class="string">'IPP'</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            PCCUserppyy.SetServeIPP(ipp)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        port=<span class="number">8080</span></span><br><span class="line">        host=<span class="string">'0.0.0.0'</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            port=cf.getint(<span class="string">'LISTEN'</span>,<span class="string">'PORT'</span>)</span><br><span class="line">            host=cf.get(<span class="string">'LISTEN'</span>,<span class="string">'IP'</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        bottle.run(server=<span class="string">'gevent'</span>,host=host,port=port)</span><br><span class="line">        <span class="comment">#bottle.run(server='flup',host=host,port=port)</span></span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    <span class="decorator">@methodroute('/')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> request.headers(<span class="string">'path'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'desiged by niwho&amp;violin'</span></span><br><span class="line">    </span><br><span class="line">    <span class="decorator">@methodroute('/pcc')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pcc</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'pcc'</span></span><br><span class="line"></span><br><span class="line">    <span class="decorator">@methodroute('')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self)</span>:</span></span><br><span class="line">        ipp = request.query.ipp</span><br><span class="line">        PCCUserppyy.SetServeIPP(ipp)</span><br><span class="line">        <span class="keyword">return</span> json.dumps(&#123;<span class="string">'ipp'</span>:ipp&#125;)</span><br><span class="line">    <span class="comment">#以下略....</span></span><br></pre></td></tr></table></figure>
+<p>详见<a href="https://github.com/niwho/pcc_rest" target="_blank" rel="external">git</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/10/21/linux/make 使用/" itemprop="url">
                 Makefile模板
               </a>
@@ -1122,213 +1293,11 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/05/zookeeper/2014-06-04_gurrentee/" itemprop="url">
-                zookeeper 特性
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-05T00:00:33+08:00" content="2014-06-05">
-            2014-06-05
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/gurrentee/" itemprop="url" rel="index"><span itemprop="name">gurrentee</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/06/05/zookeeper/2014-06-04_gurrentee/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/05/zookeeper/2014-06-04_gurrentee/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>Summary: zookeeper gurrentee</p>
-<h3 id="What_ZooKeeper_Guarantees_about_Watches">What ZooKeeper Guarantees about Watches</h3><p>With regard to watches, ZooKeeper maintains these guarantees:</p>
-<ul>
-<li>Watches are ordered with respect to other events, other watches, and asynchronous replies. The ZooKeeper client libraries ensures that everything is dispatched in order.</li>
-<li>A client will see a watch event for a znode it is watching before seeing the new data that corresponds to that znode.</li>
-<li>The order of watch events from ZooKeeper corresponds to the order of the updates as seen by the ZooKeeper service.</li>
-</ul>
-<h3 id="Things_to_Remember_about_Watches">Things to Remember about Watches</h3><ul>
-<li>Watches are one time triggers; if you get a watch event and you want to get notified of future changes, you must set another watch.<br>Because watches are one time triggers and there is latency between getting the event and sending a new request to get a watch you cannot reliably see every change that happens to a node in ZooKeeper. Be prepared to handle the case where the znode changes multiple times between getting the event and setting the watch again. (You may not care, but at least realize it may happen.)</li>
-<li>A watch object, or function/context pair, will only be triggered once for a given notification. For example, if the same watch object is registered for an exists and a getData call for the same file and that file is then deleted, the watch object would only be invoked once with the deletion notification for the file.</li>
-<li>When you disconnect from a server (for example, when the server fails), you will not get any watches until the connection is reestablished. For this reason session events are sent to all outstanding watch handlers. Use session events to go into a safe mode: you will not be receiving events while disconnected, so your process should act conservatively in that mode.</li>
-</ul>
-<h3 id="Consistency_Guarantees">Consistency Guarantees</h3><p>ZooKeeper is a high performance, scalable service. Both reads and write operations are designed to be fast, though reads are faster than writes. The reason for this is that in the case of reads, ZooKeeper can serve older data, which in turn is due to ZooKeeper’s consistency guarantees:</p>
-<h4 id="Sequential_Consistency">Sequential Consistency</h4><p>Updates from a client will be applied in the order that they were sent.</p>
-<h4 id="Atomicity">Atomicity</h4><p>Updates either succeed or fail — there are no partial results.</p>
-<h4 id="Single_System_Image">Single System Image</h4><p>A client will see the same view of the service regardless of the server that it connects to.</p>
-<h4 id="Reliability">Reliability</h4><p>Once an update has been applied, it will persist from that time forward until a client overwrites the update. This guarantee has two corollaries:</p>
-<ul>
-<li>If a client gets a successful return code, the update will have been applied. On some failures (communication errors, timeouts, etc) the client will not know if the update has applied or not. We take steps to minimize the failures, but the guarantee is only present with successful return codes. (This is called the monotonicity condition in Paxos.)</li>
-<li>Any updates that are seen by the client, through a read request or successful update, will never be rolled back when recovering from server failures.</li>
-</ul>
-<h4 id="Timeliness">Timeliness</h4><p>The clients view of the system is guaranteed to be up-to-date within a certain time bound (on the order of tens of seconds). Either system changes will be seen by a client within this bound, or the client will detect a service outage.</p>
-<p>Using these consistency guarantees it is easy to build higher level functions such as leader election, barriers, queues, and read/write revocable locks solely at the ZooKeeper client (no additions needed to ZooKeeper). See Recipes and Solutions for more details.</p>
-<h3 id="Note">Note</h3><blockquote>
-<p>Sometimes developers mistakenly assume one other guarantee that ZooKeeper does not in fact make. This is:  </p>
-<ul>
-<li>Simultaneously Consistent Cross-Client Views<br>ZooKeeper does not guarantee that at every instance in time, two different clients will have identical views of ZooKeeper data. Due to factors like network delays, one client may perform an update before another client gets notified of the change. Consider the scenario of two clients, A and B. If client A sets the value of a znode /a from 0 to 1, then tells client B to read /a, client B may read the old value of 0, depending on which server it is connected to. If it is important that Client A and Client B read the same value, Client B should should call the sync() method from the ZooKeeper API method before it performs its read.  </li>
-</ul>
-<p>So, ZooKeeper by itself doesn’t guarantee that changes occur synchronously across all servers, but ZooKeeper primitives can be used to construct higher level functions that provide useful client synchronization. (For more information, see the ZooKeeper Recipes. [tbd:..]).</p>
-</blockquote>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/05/25/python/python模块定义/" itemprop="url">
-                python扩展模块定义
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-05-25T10:35:12+08:00" content="2014-05-25">
-            2014-05-25
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-              
-              
-                ， 
-              
-
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/cplusplus/" itemprop="url" rel="index"><span itemprop="name">cplusplus</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/05/25/python/python模块定义/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/05/25/python/python模块定义/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><blockquote>
-<p><a href="git@github.com:niwho/pccuserppyy.git">python c++扩展</a></p>
-</blockquote>
-<figure class="highlight c"><figcaption><span>Methodtable及入口定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyMethodDef PCCMethods[] = &#123;</span><br><span class="line">	</span><br><span class="line">	&#123;<span class="string">"Init"</span>,  Init, METH_VARARGS, <span class="string">"初始化"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"UnInit"</span>,  UnInit, METH_VARARGS, <span class="string">"卸载"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"SetServeIPP"</span>,  SetServeIPP, METH_VARARGS, <span class="string">"建立连接"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"SetJobCallback"</span>,  SetJobCallback, METH_VARARGS, <span class="string">"设置回调函数"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListTrunk"</span>,  ListTrunk, METH_VARARGS, <span class="string">"列举trunk"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListModules"</span>,  ListModules, METH_VARARGS, <span class="string">"列举模块"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"ListModels"</span>,  ListModels, METH_VARARGS, <span class="string">"列举模型"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"Execute"</span>,  Execute, METH_VARARGS, <span class="string">"提交作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobs"</span>,  QueryJobs, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobsOnDoing"</span>,  QueryJobsOnDoing, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"QueryJobsByID"</span>,  QueryJobsByID, METH_VARARGS, <span class="string">"查询作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"CancelJobs"</span>,  CancelJobs, METH_VARARGS, <span class="string">"取消作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testCallback"</span>,  testCallback, METH_VARARGS, <span class="string">"提交作业"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testcase1"</span>,  testcase1, METH_VARARGS, <span class="string">"测试用例"</span>&#125;,</span><br><span class="line">	&#123;<span class="string">"testcase2"</span>,  testcase2, METH_VARARGS, <span class="string">"测试用例"</span>&#125;,</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	&#123;NULL, NULL, <span class="number">0</span>, NULL&#125;        <span class="comment">/* Sentinel */</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">"C"</span> <span class="function">PyMODINIT_FUNC</span><br><span class="line"><span class="title">initPCCUserppyy</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	PyObject *m;</span><br><span class="line"></span><br><span class="line">	PyEval_InitThreads() ;</span><br><span class="line">	m = Py_InitModule(<span class="string">"PCCUserppyy"</span>, PCCMethods);</span><br><span class="line">	<span class="keyword">if</span> (m == NULL)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">	PCCError = PyErr_NewException(<span class="string">"PCC.error"</span>, NULL, NULL);</span><br><span class="line">	Py_INCREF(PCCError);</span><br><span class="line">	PyModule_AddObject(m, <span class="string">"error"</span>, PCCError);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><figcaption><span>导出接口定义示例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> PyObject * ListModels(PyObject *self, PyObject *args)<span class="comment">//static keep function name local</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(gp_usr == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		PyErr_SetString(PCCError, <span class="string">"未初始化"</span>);</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> sts;</span><br><span class="line">	<span class="comment">//INT64 jobkey;</span></span><br><span class="line">	PyObject *lt;</span><br><span class="line">	<span class="keyword">if</span> (!PyArg_ParseTuple(args, <span class="string">"O"</span>,&amp;lt))</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	<span class="keyword">if</span>(!PyList_Check(lt))</span><br><span class="line">	&#123;</span><br><span class="line">		PyErr_SetString(PCCError, <span class="string">"[ListModels][params] [List:check_error] "</span>);</span><br><span class="line">		<span class="keyword">return</span> NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	tcps_Array&lt;PCC_ModelPropWithKey&gt; modelsInfo;</span><br><span class="line">	sts = _ListModels(modelsInfo);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(TCPS_OK == sts)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;modelsInfo.Length();++i)</span><br><span class="line">		&#123;</span><br><span class="line">			PyList_Append(lt,Py_BuildValue(<span class="string">"&#123;s:L,s:s,s:i&#125;"</span>,<span class="string">"id"</span>,modelsInfo[i].key</span><br><span class="line">				,<span class="string">"name"</span>,modelsInfo[i].prop.modelTag.name.Get(),<span class="string">"port"</span>,modelsInfo[i].prop.ipp.port_ ));</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d,%s\n"</span>,sts,tcps_GetErrTxt((TCPSError)sts));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> PyLong_FromLong(sts);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>详见<a href="git@github.com:niwho/pccuserppyy.git">git</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&raquo;</a>
   </nav>
 
 
@@ -1363,7 +1332,7 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">22</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1377,7 +1346,7 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
