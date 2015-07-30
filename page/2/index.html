@@ -194,6 +194,90 @@
           
           
             
+              <a class="post-title-link" href="/2014/12/07/p2p/ed2k protocol/" itemprop="url">
+                p2p 搜索
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-12-07T23:11:13+08:00" content="2014-12-07">
+            2014-12-07
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/p2p/" itemprop="url" rel="index"><span itemprop="name">p2p</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/12/07/p2p/ed2k protocol/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/07/p2p/ed2k protocol/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="ed2k_协议">ed2k 协议</h3><p>登录</p>
+<blockquote>
+<p>msg_log = struct.pack(‘&lt;BIB16sIHIBHBIBHBI’,0xe3,43,0x01,’1234567897654321’,0,5662,2,3,1,0x11,0x3c,3,1,0xfb,3&lt;&lt;24|2&lt;&lt;17|3&lt;&lt;10|1&lt;&lt;7)<br>0xe3 1byte protocol<br>43 4字节 数据长度 不包括次字段之前及其自身的长度（总共5个字节）<br>0x01 1字节 消息类型 这个表示 登录<br>‘1234567897654321’ 16字节的hash 意义不明<br>0 4字节 用户id 成功登录会返回一个id值<br>5662 2字节的tcp端口值 服务器连接客户端（内网机器没有端口映射无法访问，导致分配一个 lowid ，区别highid）<br>2 4字节的tag count（这里后面有2个 int型的tag）<br>0x3c 所谓的edonkeyversion 规定值貌似<br>3&lt;&lt;24|2&lt;&lt;17|3&lt;&lt;10|1&lt;&lt;7 这里必须设置此项表示客户端版本，否则会被拒绝连接服务器（ERROR : Your edonkey client is too old, please update it，后续的idchange消息等不会收到）</p>
+</blockquote>
+<p>(to be continued…)</p>
+<h3 id="服务器文件搜索">服务器文件搜索</h3><h3 id="kad网络搜索">kad网络搜索</h3></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/11/27/python/python嵌入/" itemprop="url">
                 python 嵌入
               </a>
@@ -1202,97 +1286,6 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/07/zookeeper/recipses/" itemprop="url">
-                words
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-07T14:18:28+08:00" content="2014-06-07">
-            2014-06-07
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/06/07/zookeeper/recipses/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/07/zookeeper/recipses/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h3 id="words_list">words list</h3><ul>
-<li><p><strong>holistic</strong>    英[həʊˈlɪstɪk] 美[hoˈlɪstɪk]</p>
-<blockquote>
-<p>adj.    全盘的，整体的;功能整体性的<br>[例句]Optimal health is the primary goal of holistic medical practice.<br>最佳的健康状态是整体医疗实践的首要目标。</p>
-</blockquote>
-</li>
-<li><p>proposal    英[prəˈpəʊzl] 美[prəˈpozəl]</p>
-<blockquote>
-<p>n.    提议;建议;求婚;〈美〉投标<br>名词复数:proposals<br>[例句]The last proposal was to tax small accounts just 3 %.<br>最后的提议是对小额账户仅征税3%。</p>
-</blockquote>
-</li>
-<li><p>deliver    英[dɪ’lɪvə(r)] 美[dɪˈlɪvɚ]  </p>
-<blockquote>
-<p>vt.    发表;递送;交付;使分娩<br>vi.    投递;传送<br>第三人称单数:delivers;过去分词:delivered;现在分词:delivering;…<br>[例句]There are a few ways carmakers get smaller engines to deliver high performance.<br>汽车制造商有几个办法可以使小型发动机实现高性能。</p>
-</blockquote>
-</li>
-<li><p>majority 英[mə’dʒɒrətɪ] 美[məˈdʒɔrɪti, -ˈdʒɑr-]</p>
-<blockquote>
-<p>n.    多数;（获胜的）票数;成年;法定年龄<br>名词复数:majorities<br>[例句]Indeed , the majority of analysts remain bullish on the company.<br>确实，大多数分析师仍然看好亚马逊的前景。</p>
-</blockquote>
-</li>
-<li></li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1332,7 +1325,7 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">22</span>
+              <span class="site-state-item-count">23</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1346,7 +1339,7 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">21</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
