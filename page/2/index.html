@@ -243,16 +243,11 @@
 
       
         
-          <span itemprop="articleBody">
-            
-            
-gevent,并发网络访问BeautifulSoup,网页解析re,关键字匹配、网站根路径获取requests,http访问、代理支持
-
-12345678910111213141516171819202122232425262728293031323334353637383940414243444
-            ...
-          </span>
+          <blockquote>
+<p>gevent,并发网络访问<br>BeautifulSoup,网页解析<br>re,关键字匹配、网站根路径获取<br>requests,http访问、代理支持</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/17/python/帖子检索/#more" rel="contents">
+            <a class="btn" href="/2014/12/17/python/帖子检索/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -334,19 +329,19 @@ gevent,并发网络访问BeautifulSoup,网页解析re,关键字匹配、网站�
 
       
         
-          <span itemprop="articleBody">
-            
-            安装配置
-
-easy_install numpy
-sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/11/python/opencv/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          <span itemprop="articleBody"><h3 id="安装配置">安装配置</h3><blockquote>
+<ol>
+<li>easy_install numpy</li>
+<li>sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)</li>
+</ol>
+</blockquote>
+<h3 id="使用">使用</h3><h2 id="取帧">取帧</h2><pre><code>:::python linenos=<span class="string">'table'</span> linenums=<span class="keyword">True</span>
+cap = cv2.VideoCapture(<span class="string">r'D:\PFS_Data\2014-11-21 11-49-43@jobKey-34.avi'</span>)
+<span class="keyword">print</span> cap.isOpened()
+data = cap.read()
+<span class="comment">#save to disk</span>
+cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number">1</span>])
+</code></pre></span>
         
       
     </div>
@@ -425,15 +420,95 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
 
       
         
-          <span itemprop="articleBody">
-            
-            ed2k 协议登录
+          <span itemprop="articleBody"><h3 id="ed2k_协议">ed2k 协议</h3><p>登录</p>
+<blockquote>
+<p>msg_log = struct.pack(‘&lt;BIB16sIHIBHBIBHBI’,0xe3,43,0x01,’1234567897654321’,0,5662,2,3,1,0x11,0x3c,3,1,0xfb,3&lt;&lt;24|2&lt;&lt;17|3&lt;&lt;10|1&lt;&lt;7)<br>0xe3 1byte protocol<br>43 4字节 数据长度 不包括次字段之前及其自身的长度（总共5个字节）<br>0x01 1字节 消息类型 这个表示 登录<br>‘1234567897654321’ 16字节的hash 意义不明<br>0 4字节 用户id 成功登录会返回一个id值<br>5662 2字节的tcp端口值 服务器连接客户端（内网机器没有端口映射无法访问，导致分配一个 lowid ，区别highid）<br>2 4字节的tag count（这里后面有2个 int型的tag）<br>0x3c 所谓的edonkeyversion 规定值貌似<br>3&lt;&lt;24|2&lt;&lt;17|3&lt;&lt;10|1&lt;&lt;7 这里必须设置此项表示客户端版本，否则会被拒绝连接服务器（ERROR : Your edonkey client is too old, please update it，后续的idchange消息等不会收到）</p>
+</blockquote>
+<p>(to be continued…)</p>
+<h3 id="服务器文件搜索">服务器文件搜索</h3><h3 id="kad网络搜索">kad网络搜索</h3></span>
+        
+      
+    </div>
 
-msg_log = struct.pack(‘&lt;BIB16sIHIBHBIBHBI’,0xe3,43,0x01,’1234567897654321’,0,5662,2,3,1,0x11,0x3c,3,1,0xfb,3&lt;&lt;24|2&lt;&lt;17|3&lt;
-            ...
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/11/27/python/pcc_rest/" itemprop="url">
+                一个简单的RESTful api
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
+            2014-11-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+              
+              
+
+            
           </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/27/python/pcc_rest/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/pcc_rest/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="https://github.com/niwho/pcc_rest">gevent+bottle实现</a></p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/07/p2p/ed2k protocol/#more" rel="contents">
+            <a class="btn" href="/2014/11/27/python/pcc_rest/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -515,107 +590,11 @@ msg_log = struct.pack(‘&lt;BIB16sIHIBHBIBHBI’,0xe3,43,0x01,’12345678976543
 
       
         
-          <span itemprop="articleBody">
-            
-            
-程序嵌入python
-
-python api只能互斥调用，同样自动锁实现123456789101112131415class PyThreadStateLock&#123;public:	PyThreadStateLock(void)	&#123;		state = PyGILState_Ensu
-            ...
-          </span>
+          <blockquote>
+<p>程序嵌入python</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/11/27/python/python嵌入/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/11/27/python/pcc_rest/" itemprop="url">
-                一个简单的RESTful api
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
-            2014-11-27
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/11/27/python/pcc_rest/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/pcc_rest/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            
-gevent+bottle实现
-
-修饰函数methodroute定义规则，routeapp根据函数名生成route123456789101112131415161718def methodroute(route,method='GET'):    def decorator(f):        
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/11/27/python/pcc_rest/#more" rel="contents">
+            <a class="btn" href="/2014/11/27/python/python嵌入/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -697,17 +676,9 @@ gevent+bottle实现
 
       
         
-          <span itemprop="articleBody">
-            
-            Makefile Template使用：直接放到工程目录下， 根据工程添加 可能修改INC LIBS 甚至编译选项 C*FLAGS ,然后make即可:::make
-BIN = test
-CC = gcc
-CPP = g++
-#这里只加入库头文件路径及库路径 根据工程添加 可能修改INC LIBS 
-            ...
-          </span>
+          <h1 id="Makefile_Template">Makefile Template</h1><h3 id="使用：直接放到工程目录下，_根据工程添加_可能修改INC_LIBS_甚至编译选项_C*FLAGS_,然后make即可">使用：直接放到工程目录下， 根据工程添加 可能修改INC LIBS 甚至编译选项 C*FLAGS ,然后make即可</h3>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/10/21/linux/make 使用/#more" rel="contents">
+            <a class="btn" href="/2014/10/21/linux/make 使用/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -789,108 +760,7 @@ CPP = g++
 
       
         
-          <span itemprop="articleBody">
-            
-            使用cPickle库
-            
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/06/26/python/py序列化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/25/python/py脚本打包/" itemprop="url">
-                py脚本打包
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-25T10:35:12+08:00" content="2014-06-25">
-            2014-06-25
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/py脚本打包/" itemprop="url" rel="index"><span itemprop="name">py脚本打包</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/06/25/python/py脚本打包/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/25/python/py脚本打包/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            使用py2exe，可打包为单个文件，打包后程序启动快，比pyinstaller快太多了。    setup 文件示例参考
-:::python linenos='table' linenums=True
-from distutils.core import setup
-import py2exe
-#s
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/06/25/python/py脚本打包/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          <span itemprop="articleBody"><h3 id="使用cPickle库">使用cPickle库</h3></span>
         
       
     </div>
@@ -969,20 +839,126 @@ import py2exe
 
       
         
-          <span itemprop="articleBody">
-            
-            MD5:::python linenos='table' linenums=True
+          <span itemprop="articleBody"><h3 id="MD5">MD5</h3><pre><code>:::python linenos=<span class="string">'table'</span> linenums=True
 
 import hashlib
 import os
 
 #简单的测试一个字符串的MD5值
-src = 'teststring'
-print (hashlib.md5(src).hexdigest().upper())
-            ...
+src = <span class="string">'teststring'</span>
+print (hashlib.<span class="function"><span class="title">md5</span><span class="params">(src)</span></span>.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>)
+#<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span> 为十六进制值，<span class="function"><span class="title">digest</span><span class="params">()</span></span>为二进制值
+
+#使用update
+m0=hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+m0.<span class="function"><span class="title">update</span><span class="params">(src)</span></span>
+print m0.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+
+#一个小文件的MD5值
+filename = <span class="string">'c:\\boot.ini'</span>
+f = <span class="function"><span class="title">file</span><span class="params">(filename,<span class="string">'rb'</span>)</span></span>
+m1 = hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+m1.<span class="function"><span class="title">update</span><span class="params">(f.read(<span class="number">8096</span>)</span></span>)
+print m1.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+f.<span class="function"><span class="title">close</span><span class="params">()</span></span>
+
+#大文件的MD5值
+def <span class="function"><span class="title">GetFileMd5</span><span class="params">(filename)</span></span>:
+    <span class="keyword">if</span> not os<span class="class">.path</span><span class="class">.isfile</span>(filename):
+    return
+myhash = hashlib.<span class="function"><span class="title">md5</span><span class="params">()</span></span>
+f = <span class="function"><span class="title">file</span><span class="params">(filename,<span class="string">'rb'</span>)</span></span>
+while True:
+    <span class="tag">b</span> = f.<span class="function"><span class="title">read</span><span class="params">(<span class="number">8096</span>)</span></span>
+    <span class="keyword">if</span> not <span class="tag">b</span> :
+        break
+    myhash.<span class="function"><span class="title">update</span><span class="params">(b)</span></span>
+f.<span class="function"><span class="title">close</span><span class="params">()</span></span>
+return myhash.<span class="function"><span class="title">hexdigest</span><span class="params">()</span></span>.<span class="function"><span class="title">upper</span><span class="params">()</span></span>
+
+print <span class="function"><span class="title">GetFileMd5</span><span class="params">(<span class="string">"c:\\a.rar"</span>)</span></span>
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/25/python/py脚本打包/" itemprop="url">
+                py脚本打包
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-25T10:35:12+08:00" content="2014-06-25">
+            2014-06-25
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/py脚本打包/" itemprop="url" rel="index"><span itemprop="name">py脚本打包</span></a></span>
+
+              
+              
+
+            
           </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/06/25/python/py脚本打包/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/25/python/py脚本打包/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>使用<a href="http://http://www.py2exe.org/">py2exe</a>，可打包为单个文件，打包后程序启动快，比pyinstaller快太多了。<br>    setup 文件示例参考<br>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/06/25/python/py库-hashlib-md5/#more" rel="contents">
+            <a class="btn" href="/2014/06/25/python/py脚本打包/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1053,22 +1029,29 @@ print (hashlib.md5(src).hexdigest().upper())
 
       
         
-          <span itemprop="articleBody">
-            
-            int main(int argc, char* argv[])  
+          <span itemprop="articleBody"><pre><code><span class="type">int</span> main(<span class="type">int</span> argc, <span class="type">char</span>* argv[])  
 {  
-    map&lt;string, string&gt; mapData;  
+    map&lt;<span class="type">string</span>, <span class="type">string</span>&gt; mapData;  
 
-    mapData["a"] = "aaa";   
-    mapData["b"] = "bbb";   
-    mapData
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/06/12/programing/map/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+    mapData[<span class="string">"a"</span>] = <span class="string">"aaa"</span>;   
+    mapData[<span class="string">"b"</span>] = <span class="string">"bbb"</span>;   
+    mapData[<span class="string">"c"</span>] = <span class="string">"ccc"</span>;   
+
+
+    <span class="keyword">for</span> (map&lt;<span class="type">string</span>, <span class="type">string</span>&gt;::<span class="keyword">iterator</span> i=mapData.begin(); i!=mapData.<span class="keyword">end</span>(); /*i++*/)  
+    {  
+        <span class="keyword">if</span> (i-&gt;first == <span class="string">"b"</span>)  
+        {  
+        mapData.erase(i++);  
+        }  
+        <span class="keyword">else</span>  
+        {  
+            i++;  
+        }  
+    }  
+    <span class="keyword">return</span> <span class="number">0</span>;  
+}
+</code></pre></span>
         
       
     </div>

@@ -35,22 +35,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="程序嵌入python
-
-python api只能互斥调用，同样自动锁实现123456789101112131415class PyThreadStateLock&amp;#123;public:	PyThreadStateLock(void)	&amp;#123;		state = PyGILState_Ensure( );	&amp;#125;	~PyThreadStateLock(void)	&amp;#123;		PyGI">
+<meta name="description" content="程序嵌入python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python 嵌入">
 <meta property="og:url" content="http://blog.niwho.com/2014/11/27/python/python嵌入/index.html">
 <meta property="og:site_name" content="niwho">
-<meta property="og:description" content="程序嵌入python
-
-python api只能互斥调用，同样自动锁实现123456789101112131415class PyThreadStateLock&amp;#123;public:	PyThreadStateLock(void)	&amp;#123;		state = PyGILState_Ensure( );	&amp;#125;	~PyThreadStateLock(void)	&amp;#123;		PyGI">
+<meta property="og:description" content="程序嵌入python">
 <meta property="og:updated_time" content="2014-11-27T08:13:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python 嵌入">
-<meta name="twitter:description" content="程序嵌入python
-
-python api只能互斥调用，同样自动锁实现123456789101112131415class PyThreadStateLock&amp;#123;public:	PyThreadStateLock(void)	&amp;#123;		state = PyGILState_Ensure( );	&amp;#125;	~PyThreadStateLock(void)	&amp;#123;		PyGI">
+<meta name="twitter:description" content="程序嵌入python">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -248,6 +242,7 @@ python api只能互斥调用，同样自动锁实现123456789101112131415class P
         <span itemprop="articleBody"><blockquote>
 <p>程序嵌入python</p>
 </blockquote>
+<a id="more"></a>
 <figure class="highlight c"><figcaption><span>python api只能互斥调用，同样自动锁实现</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> PyThreadStateLock</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		state = PyGILState_Ensure( );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PyGILState_Release( state );</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	PyGILState_STATE state;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><figcaption><span>异常处理宏统一定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PCC_ERR_HANDLE											\</span><br><span class="line">	PyObject *ptype, *pvalue0, *ptraceback;						\</span><br><span class="line">	PyErr_Fetch(&amp;ptype, &amp;pvalue0, &amp;ptraceback);					\</span><br><span class="line">	PyObject*objj = PyObject_GetAttrString(pvalue0,"args");		\</span><br><span class="line">	Py_DECREF(ptype);											\</span><br><span class="line">	Py_DECREF(pvalue0);											\</span><br><span class="line">	Py_DECREF(ptraceback);										\</span><br><span class="line">	const char* errmsg;											\</span><br><span class="line">	int err;													\</span><br><span class="line">	int t = PyArg_ParseTuple(objj, "si", &amp;errmsg,&amp;err );		\</span><br><span class="line">	<span class="keyword">if</span>(!t)														\</span><br><span class="line">	&#123;															\</span><br><span class="line">		Py_DECREF(objj);										\</span><br><span class="line">		PyErr_Print();											\</span><br><span class="line">		return -1;												\</span><br><span class="line">	&#125;															\</span><br><span class="line">	NPLogError(("%s",errmsg));									\</span><br><span class="line">	Py_DECREF(objj);											\</span><br><span class="line">	return err;</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight c"><figcaption><span>初始化定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CPyScript::CPyScript(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> PYSUPORT</span></span><br><span class="line">	<span class="comment">// 初始化</span></span><br><span class="line">	Py_NoSiteFlag = <span class="number">1</span>; <span class="comment">//一定要加这一句</span></span><br><span class="line">	Py_Initialize();</span><br><span class="line">	<span class="comment">// 初始化线程支持</span></span><br><span class="line">	PyEval_InitThreads();</span><br><span class="line">	<span class="comment">// 启动子线程前执行，为了释放PyEval_InitThreads获得的全局锁，否则子线程可能无法获取到全局锁。</span></span><br><span class="line">	PyEval_ReleaseThread(PyThreadState_Get());</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -272,13 +267,13 @@ python api只能互斥调用，同样自动锁实现123456789101112131415class P
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/12/07/p2p/ed2k protocol/" rel="prev">p2p 搜索</a>
+              <a href="/2014/11/27/python/pcc_rest/" rel="prev">一个简单的RESTful api</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/11/27/python/pcc_rest/" rel="next">一个简单的RESTful api</a>
+              <a href="/2014/10/21/linux/make 使用/" rel="next">Makefile模板</a>
             
           </div>
         </div>
