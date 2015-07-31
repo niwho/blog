@@ -263,7 +263,7 @@ cmd:行命令解释器框架unicurses(依赖pdcurses)扩展模块pccuserppyy
 </blockquote>
 <p><img src="http://7xklyj.com1.z0.glb.clouddn.com/terminal2.png" alt="Alt pdcurses动态数据显示"></p>
 <h3 id="进一步">进一步</h3><ol>
-<li>pdcurses的数据显示部分，考虑panel(或window)控件化，一个panel对应一个节点。目前是每次重新绘制，节点减少的状况下，有残留绘制问题。</li>
+<li><del>pdcurses的数据显示部分，考虑panel(或window)控件化，一个panel对应一个节点。目前是每次重新绘制，节点减少的状况下，有残留绘制问题。</del></li>
 <li>打包问题，使用py2exe打包为单个exe文件，由于unicurses包装的pdcurses使用ctpyes的方式导入，pdcurses.dll无法打包到压缩的exe中（尝试修改py2exe的打包，添加这个dll,ctypes是从本地目录导入，无法从内存从直接加载，不能解决)需要和exe一起发布。</li>
 </ol>
 <h2 id="程序启动和关闭">程序启动和关闭</h2><blockquote>
@@ -300,13 +300,13 @@ cmd:行命令解释器框架unicurses(依赖pdcurses)扩展模块pccuserppyy
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/05/20/python/rpc framework/" rel="prev">基于gevent的rpc框架（雏形）</a>
+              <a href="/2015/05/20/algorithm/raft/" rel="prev">raft算法的一种实现--replicated sqlite</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/03/30/python/mywebsocket/" rel="next">websocket客户端</a>
+              <a href="/2015/05/20/python/rpc framework/" rel="next">基于gevent的rpc框架（雏形）</a>
             
           </div>
         </div>
@@ -373,21 +373,21 @@ cmd:行命令解释器框架unicurses(依赖pdcurses)扩展模块pccuserppyy
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -664,6 +664,27 @@ cmd:行命令解释器框架unicurses(依赖pdcurses)扩展模块pccuserppyy
     });
 </script>
 
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 

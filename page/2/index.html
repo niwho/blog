@@ -194,6 +194,97 @@
           
           
             
+              <a class="post-title-link" href="/2014/12/11/python/opencv/" itemprop="url">
+                opencv
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-12-11T10:46:22+08:00" content="2014-12-11">
+            2014-12-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/12/11/python/opencv/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/11/python/opencv/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="安装配置">安装配置</h3><blockquote>
+<ol>
+<li>easy_install numpy</li>
+<li>sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)</li>
+</ol>
+</blockquote>
+<h3 id="使用">使用</h3><h2 id="取帧">取帧</h2><pre><code>:::python linenos=<span class="string">'table'</span> linenums=<span class="keyword">True</span>
+cap = cv2.VideoCapture(<span class="string">r'D:\PFS_Data\2014-11-21 11-49-43@jobKey-34.avi'</span>)
+<span class="keyword">print</span> cap.isOpened()
+data = cap.read()
+<span class="comment">#save to disk</span>
+cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number">1</span>])
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/12/07/p2p/ed2k protocol/" itemprop="url">
                 p2p 搜索
               </a>
@@ -249,91 +340,6 @@
 </blockquote>
 <p>(to be continued…)</p>
 <h3 id="服务器文件搜索">服务器文件搜索</h3><h3 id="kad网络搜索">kad网络搜索</h3></span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/11/27/python/python嵌入/" itemprop="url">
-                python 嵌入
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
-            2014-11-27
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/11/27/python/python嵌入/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/python嵌入/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><blockquote>
-<p>程序嵌入python</p>
-</blockquote>
-<figure class="highlight c"><figcaption><span>python api只能互斥调用，同样自动锁实现</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> PyThreadStateLock</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		state = PyGILState_Ensure( );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PyGILState_Release( state );</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	PyGILState_STATE state;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><figcaption><span>异常处理宏统一定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PCC_ERR_HANDLE											\</span><br><span class="line">	PyObject *ptype, *pvalue0, *ptraceback;						\</span><br><span class="line">	PyErr_Fetch(&amp;ptype, &amp;pvalue0, &amp;ptraceback);					\</span><br><span class="line">	PyObject*objj = PyObject_GetAttrString(pvalue0,"args");		\</span><br><span class="line">	Py_DECREF(ptype);											\</span><br><span class="line">	Py_DECREF(pvalue0);											\</span><br><span class="line">	Py_DECREF(ptraceback);										\</span><br><span class="line">	const char* errmsg;											\</span><br><span class="line">	int err;													\</span><br><span class="line">	int t = PyArg_ParseTuple(objj, "si", &amp;errmsg,&amp;err );		\</span><br><span class="line">	<span class="keyword">if</span>(!t)														\</span><br><span class="line">	&#123;															\</span><br><span class="line">		Py_DECREF(objj);										\</span><br><span class="line">		PyErr_Print();											\</span><br><span class="line">		return -1;												\</span><br><span class="line">	&#125;															\</span><br><span class="line">	NPLogError(("%s",errmsg));									\</span><br><span class="line">	Py_DECREF(objj);											\</span><br><span class="line">	return err;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight c"><figcaption><span>初始化定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CPyScript::CPyScript(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> PYSUPORT</span></span><br><span class="line">	<span class="comment">// 初始化</span></span><br><span class="line">	Py_NoSiteFlag = <span class="number">1</span>; <span class="comment">//一定要加这一句</span></span><br><span class="line">	Py_Initialize();</span><br><span class="line">	<span class="comment">// 初始化线程支持</span></span><br><span class="line">	PyEval_InitThreads();</span><br><span class="line">	<span class="comment">// 启动子线程前执行，为了释放PyEval_InitThreads获得的全局锁，否则子线程可能无法获取到全局锁。</span></span><br><span class="line">	PyEval_ReleaseThread(PyThreadState_Get());</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</span>
         
       
     </div>
@@ -419,6 +425,91 @@
 <figure class="highlight python"><figcaption><span>异常及通用处理包装（使用修饰）：授权验证及异常处理</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCCException</span><span class="params">(PCCUserppyy.error)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,errcode,errmsg)</span>:</span></span><br><span class="line">        self.err=[]</span><br><span class="line">        self.err.append(errcode)</span><br><span class="line">        self.err.append(errmsg)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span><span class="params">(self,idx)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.err[idx]</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> repr(self.err)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">authed</span><span class="params">(met)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(*args)</span>:</span></span><br><span class="line">        output=&#123;&#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            obj = args[<span class="number">0</span>]</span><br><span class="line">            <span class="keyword">assert</span> isinstance(obj,PCC)</span><br><span class="line">            rt,des = obj.auth.validate(request.query.token)</span><br><span class="line">            <span class="keyword">if</span> rt&gt;-<span class="number">1</span>:</span><br><span class="line">                <span class="keyword">return</span> met(*args) <span class="comment">#这里格式自定</span></span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=rt</span><br><span class="line">            output[<span class="string">'error'</span>]=des</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">        <span class="keyword">except</span> PCCUserppyy.error,e:</span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=e[<span class="number">0</span>]</span><br><span class="line">            output[<span class="string">'error'</span>]=e[<span class="number">1</span>]</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">        <span class="keyword">except</span> Exception,e:</span><br><span class="line">            <span class="keyword">print</span> traceback.format_exc()</span><br><span class="line">            <span class="keyword">print</span> e</span><br><span class="line">            output[<span class="string">'request'</span>]=request.path</span><br><span class="line">            output[<span class="string">'error_code'</span>]=-<span class="number">1</span></span><br><span class="line">            <span class="comment">#print '$$$$',e</span></span><br><span class="line">            output[<span class="string">'error'</span>]=str(e)</span><br><span class="line">            <span class="keyword">return</span> json.dumps(output,encoding=<span class="string">'gbk'</span>,ensure_ascii=<span class="keyword">False</span>) <span class="comment"># 错误</span></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br></pre></td></tr></table></figure>
 <figure class="highlight python"><figcaption><span>业务类定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PCC</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, config=&#123;&#125;)</span>:</span></span><br><span class="line">        self.config = config</span><br><span class="line">        routeapp(self)</span><br><span class="line">        </span><br><span class="line">        self.auth = auth.Auth()</span><br><span class="line">        </span><br><span class="line">        LOG_FILE = <span class="string">'%s.log'</span>%(time.strftime(<span class="string">'%Y-%m-%d %A %H-%M-%S'</span>,time.localtime(time.time())),)<span class="comment">#'tst.log'  </span></span><br><span class="line">  </span><br><span class="line">        handler = logging.handlers.RotatingFileHandler(LOG_FILE, maxBytes = <span class="number">1024</span>*<span class="number">1024</span>) <span class="comment"># 实例化handler   </span></span><br><span class="line">        fmt = <span class="string">'%(asctime)s - %(filename)s:%(lineno)s - %(name)s - %(message)s'</span>  </span><br><span class="line">  </span><br><span class="line">        formatter = logging.Formatter(fmt)   <span class="comment"># 实例化formatter  </span></span><br><span class="line">        handler.setFormatter(formatter)      <span class="comment"># 为handler添加formatter  </span></span><br><span class="line">  </span><br><span class="line">        self.logger = logging.getLogger(<span class="string">'pcc'</span>)    <span class="comment"># 获取名为tst的logger  </span></span><br><span class="line">        self.logger.addHandler(handler)           <span class="comment"># 为logger添加handler  </span></span><br><span class="line">        self.logger.setLevel(logging.DEBUG)  </span><br><span class="line">        </span><br><span class="line">        self.charsetmatch = re.compile(<span class="string">r'charset=([\w-]+)'</span>)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        PCCUserppyy.Init()</span><br><span class="line">        cf = ConfigParser.SafeConfigParser()</span><br><span class="line">        cf.read(<span class="string">r'./conf.ini'</span>)</span><br><span class="line">        ipp=cf.get(<span class="string">'PCC'</span>,<span class="string">'IPP'</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            PCCUserppyy.SetServeIPP(ipp)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        port=<span class="number">8080</span></span><br><span class="line">        host=<span class="string">'0.0.0.0'</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            port=cf.getint(<span class="string">'LISTEN'</span>,<span class="string">'PORT'</span>)</span><br><span class="line">            host=cf.get(<span class="string">'LISTEN'</span>,<span class="string">'IP'</span>)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        bottle.run(server=<span class="string">'gevent'</span>,host=host,port=port)</span><br><span class="line">        <span class="comment">#bottle.run(server='flup',host=host,port=port)</span></span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    <span class="decorator">@methodroute('/')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> request.headers(<span class="string">'path'</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">'desiged by niwho&amp;violin'</span></span><br><span class="line">    </span><br><span class="line">    <span class="decorator">@methodroute('/pcc')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pcc</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">'pcc'</span></span><br><span class="line"></span><br><span class="line">    <span class="decorator">@methodroute('')</span></span><br><span class="line">    <span class="decorator">@authed</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connect</span><span class="params">(self)</span>:</span></span><br><span class="line">        ipp = request.query.ipp</span><br><span class="line">        PCCUserppyy.SetServeIPP(ipp)</span><br><span class="line">        <span class="keyword">return</span> json.dumps(&#123;<span class="string">'ipp'</span>:ipp&#125;)</span><br><span class="line">    <span class="comment">#以下略....</span></span><br></pre></td></tr></table></figure>
 <p>详见<a href="https://github.com/niwho/pcc_rest" target="_blank" rel="external">git</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/11/27/python/python嵌入/" itemprop="url">
+                python 嵌入
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
+            2014-11-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/27/python/python嵌入/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/python嵌入/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<p>程序嵌入python</p>
+</blockquote>
+<figure class="highlight c"><figcaption><span>python api只能互斥调用，同样自动锁实现</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> PyThreadStateLock</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		state = PyGILState_Ensure( );</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~PyThreadStateLock(<span class="keyword">void</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		PyGILState_Release( state );</span><br><span class="line">	&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	PyGILState_STATE state;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>异常处理宏统一定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> PCC_ERR_HANDLE											\</span><br><span class="line">	PyObject *ptype, *pvalue0, *ptraceback;						\</span><br><span class="line">	PyErr_Fetch(&amp;ptype, &amp;pvalue0, &amp;ptraceback);					\</span><br><span class="line">	PyObject*objj = PyObject_GetAttrString(pvalue0,"args");		\</span><br><span class="line">	Py_DECREF(ptype);											\</span><br><span class="line">	Py_DECREF(pvalue0);											\</span><br><span class="line">	Py_DECREF(ptraceback);										\</span><br><span class="line">	const char* errmsg;											\</span><br><span class="line">	int err;													\</span><br><span class="line">	int t = PyArg_ParseTuple(objj, "si", &amp;errmsg,&amp;err );		\</span><br><span class="line">	<span class="keyword">if</span>(!t)														\</span><br><span class="line">	&#123;															\</span><br><span class="line">		Py_DECREF(objj);										\</span><br><span class="line">		PyErr_Print();											\</span><br><span class="line">		return -1;												\</span><br><span class="line">	&#125;															\</span><br><span class="line">	NPLogError(("%s",errmsg));									\</span><br><span class="line">	Py_DECREF(objj);											\</span><br><span class="line">	return err;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><figcaption><span>初始化定义</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CPyScript::CPyScript(<span class="keyword">void</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">if</span> PYSUPORT</span></span><br><span class="line">	<span class="comment">// 初始化</span></span><br><span class="line">	Py_NoSiteFlag = <span class="number">1</span>; <span class="comment">//一定要加这一句</span></span><br><span class="line">	Py_Initialize();</span><br><span class="line">	<span class="comment">// 初始化线程支持</span></span><br><span class="line">	PyEval_InitThreads();</span><br><span class="line">	<span class="comment">// 启动子线程前执行，为了释放PyEval_InitThreads获得的全局锁，否则子线程可能无法获取到全局锁。</span></span><br><span class="line">	PyEval_ReleaseThread(PyThreadState_Get());</span><br><span class="line"><span class="preprocessor">#<span class="keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </span>
         
       
@@ -1215,77 +1306,6 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/09/zookeeper/summary/" itemprop="url">
-                zookeeper summary
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-09T18:54:56+08:00" content="2014-06-09">
-            2014-06-09
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/06/09/zookeeper/summary/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/09/zookeeper/summary/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h3 id="summary">summary</h3><h5 id="wather">wather</h5><ul>
-<li>客户端watcher是同步执行的（相互之间的执行顺序一定，in order）</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1325,21 +1345,21 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">23</span>
+              <span class="site-state-item-count">24</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">11</span>
+              <span class="site-state-item-count">12</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">24</span>
+              <span class="site-state-item-count">25</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -1467,6 +1487,27 @@ _memimporter.get_verbose_flag = <span class="keyword">lambda</span>: <span class
     });
 </script>
 
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 
 
