@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="python," />
+  <meta name="keywords" content="python,基础," />
 
 
 
@@ -35,34 +35,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="安装配置
-
-easy_install numpy
-sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)
-
-
-使用取帧:::python">
+<meta name="description" content="基本概念（个人理解）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="opencv">
-<meta property="og:url" content="http://blog.niwho.com/2014/12/11/python/opencv/index.html">
+<meta property="og:title" content="python基本概念(remind)">
+<meta property="og:url" content="http://blog.niwho.com/2015/08/04/python/python基本概念/index.html">
 <meta property="og:site_name" content="niwho">
-<meta property="og:description" content="安装配置
-
-easy_install numpy
-sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)
-
-
-使用取帧:::python">
-<meta property="og:updated_time" content="2014-12-11T02:46:30.000Z">
+<meta property="og:description" content="基本概念（个人理解）">
+<meta property="og:updated_time" content="2015-08-04T03:31:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="opencv">
-<meta name="twitter:description" content="安装配置
-
-easy_install numpy
-sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)
-
-
-使用取帧:::python">
+<meta name="twitter:title" content="python基本概念(remind)">
+<meta name="twitter:description" content="基本概念（个人理解）">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -72,7 +54,7 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
   };
 </script>
 
-    <title> opencv // niwho </title>
+    <title> python基本概念(remind) // niwho </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -211,7 +193,7 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
           
           
             
-              opencv
+              python基本概念(remind)
             
           
         </h1>
@@ -220,8 +202,8 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2014-12-11T10:46:22+08:00" content="2014-12-11">
-            2014-12-11
+          <time itemprop="dateCreated" datetime="2015-08-04T11:31:42+08:00" content="2015-08-04">
+            2015-08-04
           </time>
         </span>
 
@@ -229,7 +211,7 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
           <span class="post-category" >
             &nbsp; | &nbsp; 分类于
             
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
 
               
               
@@ -242,8 +224,8 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
           
             <span class="post-comments-count">
               &nbsp; | &nbsp;
-              <a href="/2014/12/11/python/opencv/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/11/python/opencv/" itemprop="commentsCount"></span>
+              <a href="/2015/08/04/python/python基本概念/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/04/python/python基本概念/" itemprop="commentsCount"></span>
               </a>
             </span>
           
@@ -257,19 +239,51 @@ sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目
       
 
       
-        <span itemprop="articleBody"><h3 id="安装配置">安装配置</h3><blockquote>
+        <span itemprop="articleBody"><blockquote>
+<p>基本概念（个人理解）</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<p>详细化[tbd]</p>
+</blockquote>
+<h1 id="闭包">闭包</h1><blockquote>
+<p>函数和引用环境(外部变量等)组成的整体<br>在有闭包语义的语言中，一般满足2个特性：</p>
+<blockquote>
 <ol>
-<li>easy_install numpy</li>
-<li>sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)</li>
+<li>函数是 first-calss value,即函数和一般变量一样作为参数或返回值</li>
+<li>函数可以嵌套定义</li>
 </ol>
 </blockquote>
-<h3 id="使用">使用</h3><h2 id="取帧">取帧</h2><pre><code>:::python linenos=<span class="string">'table'</span> linenums=<span class="keyword">True</span>
-cap = cv2.VideoCapture(<span class="string">r'D:\PFS_Data\2014-11-21 11-49-43@jobKey-34.avi'</span>)
-<span class="keyword">print</span> cap.isOpened()
-data = cap.read()
-<span class="comment">#save to disk</span>
-cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number">1</span>])
-</code></pre></span>
+</blockquote>
+<h1 id="函数修饰符">函数修饰符</h1><blockquote>
+<p>重新包装函数</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">def authed(met):</span><br><span class="line">    def wrapper(*args):#这个包装函数里做任意的其它内容</span><br><span class="line">        met(args)#这里的met引用，闭包特性</span><br><span class="line">    return wrapper</span><br><span class="line"></span><br><span class="line">def authed2(a) #带参数的修饰符</span><br><span class="line">    def w1(met):# a,met都是闭包的外部环境</span><br><span class="line">        print a#example</span><br><span class="line">        def w2(*args):</span><br><span class="line">            met(args)</span><br><span class="line">        return w2</span><br><span class="line"></span><br><span class="line">#用法</span><br><span class="line">@authed</span><br><span class="line">def somfuc():</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<h1 id="迭代器及生成器">迭代器及生成器</h1><blockquote>
+<p>迭代器：有<strong>iter</strong>属性的对象，方法返回一个有next方法的对象（通常是自身）<br>生成器：有yield方法的的函数，很大程度上和迭代器相同，除了next,有send方法可以提供yield的返回值，由于生成器正好是函数范畴的，可以实现协程的语义</p>
+</blockquote>
+<h1 id="metaclass"><a href="http://www.pythoncentral.io/how-metaclasses-work-technically-in-python-2-and-3/#custom-tab-0-python-2-x" target="_blank" rel="external">metaclass</a></h1><blockquote>
+<p>metaclass和decorator是被framework普遍使用的技术了。<br>metaclass是一种’定义’其它类的类，可以是类、函数或者任意的有可调用对象（有<strong>call</strong>属性）,函数方式和类的<strong>new</strong>相近除了少一个元类参数，这个参数对修改要生成的类无作用或者说不会用到)。类（被创建的）名、基类序列、类定义的所有属性（方法和变量）这3组数据将被用来调用metaclass（如前述，metaclass可被调用），这里特别说明一点，metaclass如果定义为一个类，则必须是type类的子类，其实就是调用类的构造过程，这个类的实例化是返回的别的类的定义（‘实例化’），type.<strong>new</strong>和object.<strong>new</strong> 完全不同，python文档中未有type的详细说明，不过从type的调用说明可窥一斑，无论是用type.<strong>new</strong>(metaclass必须是type的子类）还是type()的方式，后一种方式退化为函数的指定方式，从而被创建类的type是type而不是这个metaclass<br>类创建（定义）时，先从自身查找<strong>metaclass</strong>属性的定义，找到就用这个<strong>metaclass</strong>来创建类，否则使用基类的type来创建类<br>在metaclass中定义<strong>new</strong> 或者 <strong>init</strong>可以用来修改类的属性或基类<br>除了了‘注入’修改类的创建，也可以改变类实例化时的行为，前提metaclass是类的指定方式，增加定义<strong>call</strong>方法，则对象的实例化是在metaclass的metaclass这个方法中实例化返回，这里的定制化修改是发生在对象的创建时期，注意和前述的方式的差异，这里可定制化的修改是在对象上的修改而不是这个对象的类的修改。</p>
+</blockquote>
+<h2 id="type和object">type和object</h2><blockquote>
+<p>其实要理解metaclass就不能不提python的type和object的[tbd]</p>
+</blockquote>
+<h1 id="列表推导">列表推导</h1><blockquote>
+<p>[Expression for Variable in  list [condition]]</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> a <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line">[[x,y] <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">2</span>) <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">2</span>)]</span><br></pre></td></tr></table></figure>
+<h1 id="匿名函数或者lambda函数">匿名函数或者lambda函数</h1><blockquote>
+<p>主要函数式编程使用<br>格式：lambda argument1 argument2 … :expression using arguments<br>返回值就是expression的值</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f=(<span class="keyword">lambda</span> a,b:a&gt;b)</span><br><span class="line">f(<span class="number">1</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="异常">异常</h1><blockquote>
+<p>python的异常可以作为一种编程逻辑而不仅仅是对极端错误的特殊处理</p>
+</blockquote>
+<figure class="highlight python"><figcaption><span>格式</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>:</span><br><span class="line">   block</span><br><span class="line"><span class="keyword">except</span> [exception,[data…]]:</span><br><span class="line">   block</span><br><span class="line"><span class="keyword">else</span>:   <span class="comment">#可选，没有异常发生时执行</span></span><br><span class="line">   block</span><br><span class="line"><span class="keyword">finally</span>:<span class="comment">#可选，无论是否异常一定保证执行的代码</span></span><br><span class="line">   block</span><br><span class="line"><span class="keyword">raise</span> [exception[,data]]<span class="comment">#抛出异常</span></span><br><span class="line"></span><br><span class="line">traceback.print_exc() <span class="comment">#异常追溯</span></span><br><span class="line">sys.exc_info()</span><br></pre></td></tr></table></figure>
+<h1 id="函数式编程">函数式编程</h1><blockquote>
+<p>reduce(function, iterable, initializer=None),依次取iterable中的数据做合并操作，返回值是一个数据<br>map(function, iterable1, iterable2…)，function每次接收对应的iterablex中的数字返回一个数据项，iterable不等长时，用None表示空项<br>filter(function, iterable),function对每个元素做判断，真保留，假丢弃<br>zip(iterable1, iterable2, …) 合成元组，相当于map(lambda *args:args,iterable1,iterable2,…)</p>
+</blockquote>
+</span>
       
     </div>
 
@@ -279,6 +293,8 @@ cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number
           
             <a href="/tags/python/" rel="tag">#python</a>
           
+            <a href="/tags/基础/" rel="tag">#基础</a>
+          
         </div>
       
 
@@ -286,13 +302,11 @@ cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2014/12/17/python/帖子检索/" rel="prev">帖子检索</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2014/12/07/p2p/ed2k protocol/" rel="next">p2p 搜索</a>
+              <a href="/2015/08/02/algorithm/leetcode/" rel="next">leetcode</a>
             
           </div>
         </div>
@@ -318,8 +332,8 @@ cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number
             
               <div class="comments" id="comments">
                 
-                  <div class="ds-thread" data-thread-key="2014/12/11/python/opencv/"
-                       data-title="opencv" data-url="http://blog.niwho.com/2014/12/11/python/opencv/">
+                  <div class="ds-thread" data-thread-key="2015/08/04/python/python基本概念/"
+                       data-title="python基本概念(remind)" data-url="http://blog.niwho.com/2015/08/04/python/python基本概念/">
                   </div>
                 
               </div>
@@ -411,7 +425,7 @@ cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装配置"><span class="nav-number">1.</span> <span class="nav-text">安装配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取帧"><span class="nav-number"></span> <span class="nav-text">取帧</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number">1.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数修饰符"><span class="nav-number">2.</span> <span class="nav-text">函数修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器及生成器"><span class="nav-number">3.</span> <span class="nav-text">迭代器及生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#metaclass"><span class="nav-number">4.</span> <span class="nav-text">metaclass</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#type和object"><span class="nav-number">4.1.</span> <span class="nav-text">type和object</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表推导"><span class="nav-number">5.</span> <span class="nav-text">列表推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名函数或者lambda函数"><span class="nav-number">6.</span> <span class="nav-text">匿名函数或者lambda函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">7.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数式编程"><span class="nav-number">8.</span> <span class="nav-text">函数式编程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
