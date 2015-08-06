@@ -246,6 +246,9 @@
 <blockquote>
 <p>详细化[tbd]</p>
 </blockquote>
+<h1 id="classmethod_staticmethod_classvariable">classmethod staticmethod classvariable</h1><blockquote>
+<p>被问到的….<br>类方法、静态方法、类变量<br>类变量是和def函数的定义平级（同缩进）的变量定义<br>类方法和静态方法都可访问类变量，均不能访问实例化变量</p>
+</blockquote>
 <h1 id="闭包">闭包</h1><blockquote>
 <p>函数和引用环境(外部变量等)组成的整体<br>在有闭包语义的语言中，一般满足2个特性：</p>
 <blockquote>
@@ -263,7 +266,7 @@
 <p>迭代器：有<strong>iter</strong>属性的对象，方法返回一个有next方法的对象（通常是自身）<br>生成器：有yield方法的的函数，很大程度上和迭代器相同，除了next,有send方法可以提供yield的返回值，由于生成器正好是函数范畴的，可以实现协程的语义</p>
 </blockquote>
 <h1 id="metaclass"><a href="http://www.pythoncentral.io/how-metaclasses-work-technically-in-python-2-and-3/#custom-tab-0-python-2-x" target="_blank" rel="external">metaclass</a></h1><blockquote>
-<p>metaclass和decorator是被framework普遍使用的技术了。<br>metaclass是一种’定义’其它类的类，可以是类、函数或者任意的有可调用对象（有<strong>call</strong>属性）,函数方式和类的<strong>new</strong>相近除了少一个元类参数，这个参数对修改要生成的类无作用或者说不会用到)。类（被创建的）名、基类序列、类定义的所有属性（方法和变量）这3组数据将被用来调用metaclass（如前述，metaclass可被调用），这里特别说明一点，metaclass如果定义为一个类，则必须是type类的子类，其实就是调用类的构造过程，这个类的实例化是返回的别的类的定义（‘实例化’），type.<strong>new</strong>和object.<strong>new</strong> 完全不同，python文档中未有type的详细说明，不过从type的调用说明可窥一斑，无论是用type.<strong>new</strong>(metaclass必须是type的子类）还是type()的方式，后一种方式退化为函数的指定方式，从而被创建类的type是type而不是这个metaclass<br>类创建（定义）时，先从自身查找<strong>metaclass</strong>属性的定义，找到就用这个<strong>metaclass</strong>来创建类，否则使用基类的type来创建类<br>在metaclass中定义<strong>new</strong> 或者 <strong>init</strong>可以用来修改类的属性或基类<br>除了了‘注入’修改类的创建，也可以改变类实例化时的行为，前提metaclass是类的指定方式，增加定义<strong>call</strong>方法，则对象的实例化是在metaclass的metaclass这个方法中实例化返回，这里的定制化修改是发生在对象的创建时期，注意和前述的方式的差异，这里可定制化的修改是在对象上的修改而不是这个对象的类的修改。</p>
+<p>metaclass和decorator是被framework普遍使用的技术了。<br>metaclass是一种’定义’其它类的类，可以是类、函数或者任意的有可调用对象（有<strong>call</strong>属性）,函数方式和类的<strong>new</strong>相近除了少一个元类参数，这个参数对修改要生成的类无作用或者说不会用到)。类（被创建的）名、基类序列、类定义的所有属性（方法和变量）这3组数据将被用来调用metaclass（如前述，metaclass可被调用），这里特别说明一点，metaclass如果定义为一个类，则必须是type类的子类，其实就是调用类的构造过程，这个类的实例化是返回的别的类的定义（‘实例化’），type.<strong>new</strong>和object.<strong>new</strong> 完全不同，python文档中未有type的详细说明，不过从type的调用说明可窥一斑，无论是用type.<strong>new</strong>(metaclass必须是type的子类）还是type()的方式，后一种方式退化为函数的指定方式，从而被创建类的type是type而不是这个metaclass<br>类创建（定义）时，先从自身查找<strong>metaclass</strong>属性的定义，找到就用这个<strong>metaclass</strong>来创建类，否则使用基类的type来创建类<br>在metaclass中定义<strong>new</strong> 或者 <strong>init</strong>可以用来修改类的属性或基类<br>除了了‘注入’修改类的创建，也可以改变类实例化时的行为，前提metaclass是类的指定方式，增加定义<strong>call</strong>方法，则对象的实例化是在metaclass的<strong>call</strong>这个方法中实例化返回，这里的定制化修改是发生在对象的创建时期，注意和前述的方式的差异，这里可定制化的修改是在对象上的修改而不是这个对象的类的修改。</p>
 </blockquote>
 <h2 id="type和object">type和object</h2><blockquote>
 <p>其实要理解metaclass就不能不提python的type和object的[tbd]</p>
@@ -301,6 +304,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/05/python/scarpy爬虫/" rel="prev">scarpy爬虫</a>
             
           </div>
 
@@ -373,7 +378,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -425,7 +430,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number">1.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数修饰符"><span class="nav-number">2.</span> <span class="nav-text">函数修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器及生成器"><span class="nav-number">3.</span> <span class="nav-text">迭代器及生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#metaclass"><span class="nav-number">4.</span> <span class="nav-text">metaclass</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#type和object"><span class="nav-number">4.1.</span> <span class="nav-text">type和object</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表推导"><span class="nav-number">5.</span> <span class="nav-text">列表推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名函数或者lambda函数"><span class="nav-number">6.</span> <span class="nav-text">匿名函数或者lambda函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">7.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数式编程"><span class="nav-number">8.</span> <span class="nav-text">函数式编程</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#classmethod_staticmethod_classvariable"><span class="nav-number">1.</span> <span class="nav-text">classmethod staticmethod classvariable</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闭包"><span class="nav-number">2.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数修饰符"><span class="nav-number">3.</span> <span class="nav-text">函数修饰符</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#迭代器及生成器"><span class="nav-number">4.</span> <span class="nav-text">迭代器及生成器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#metaclass"><span class="nav-number">5.</span> <span class="nav-text">metaclass</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#type和object"><span class="nav-number">5.1.</span> <span class="nav-text">type和object</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列表推导"><span class="nav-number">6.</span> <span class="nav-text">列表推导</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#匿名函数或者lambda函数"><span class="nav-number">7.</span> <span class="nav-text">匿名函数或者lambda函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异常"><span class="nav-number">8.</span> <span class="nav-text">异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数式编程"><span class="nav-number">9.</span> <span class="nav-text">函数式编程</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

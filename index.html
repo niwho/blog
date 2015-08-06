@@ -194,6 +194,106 @@
           
           
             
+              <a class="post-title-link" href="/2015/08/05/python/scarpy爬虫/" itemprop="url">
+                scarpy爬虫
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-05T15:57:01+08:00" content="2015-08-05">
+            2015-08-05
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/08/05/python/scarpy爬虫/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/08/05/python/scarpy爬虫/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><blockquote>
+<p>以下内容适用scrapy 1.0.1版本</p>
+</blockquote>
+<h1 id="架构">架构</h1><p><img src="http://7xklyj.com1.z0.glb.clouddn.com/scrapy_.png" alt="architectrue"></p>
+<blockquote>
+<h2 id="Scrapy_Engine">Scrapy Engine</h2><p>引擎，控管scrapy各部件的数据流，触发事件</p>
+<h2 id="Scheduler">Scheduler</h2><p>调度器，从引擎获取请求，并发给引擎（主动请求）</p>
+<h2 id="Downloader">Downloader</h2><p>下载器，负责获取网页，发送给引擎，引擎再发给</p>
+<h2 id="Spiders">Spiders</h2><p>网虫(个人意译)，用户自定义类用来解析响应数据，从中提取爬取的项及url链接</p>
+<h2 id="Item_Pipeline">Item Pipeline</h2><p>爬取项流水线，负责处理网虫每次（yield）提取的项。通常的任务包括 验证、存储等</p>
+<h2 id="Downloader_middlewares">Downloader middlewares</h2><p>下载中间件，位于引擎和下载器之间的钩子（们），处理从引擎到下载器的请求和下载器到引擎的响应。钩子提供了一个方便的机制通过插件来扩展scarpy的功能性</p>
+<h2 id="Spider_middlewares">Spider middlewares</h2><p>网虫中间件，位于引擎和网虫之间的钩子（们），性质类同上。</p>
+</blockquote>
+<h1 id="数据流">数据流</h1><p>scarpy的运行过程如下：</p>
+<ol>
+<li>引擎打开主域，定位网虫处理这个域名，请求网虫爬去第一个url</li>
+<li>引擎获取到这个url，向调度器发送这个url</li>
+<li>引擎让调度器返回下一个要爬取的链接</li>
+<li>调度器返回待爬取的下一个连接给引擎，引擎发送这个链接给下载器，如果有下载中间件则要通过中间件的处理最后送达下载器</li>
+<li></li>
+</ol>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/08/04/python/python基本概念/" itemprop="url">
                 python基本概念(remind)
               </a>
@@ -538,6 +638,79 @@
           
           
             
+              <a class="post-title-link" href="/2015/07/22/hello-world/" itemprop="url">
+                Hello World
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-22T15:48:27+08:00" content="2015-07-22">
+            2015-07-22
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2015/07/22/hello-world/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/hello-world/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Welcome to <a href="http://hexo.io/">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/07/22/hello-world/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/07/22/新的开始/" itemprop="url">
                 新的开始
               </a>
@@ -589,79 +762,6 @@
         
           <span itemprop="articleBody"><p>start from here…</p>
 </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/07/22/hello-world/" itemprop="url">
-                Hello World
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-07-22T15:48:27+08:00" content="2015-07-22">
-            2015-07-22
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/07/22/hello-world/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/07/22/hello-world/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>Welcome to <a href="http://hexo.io/">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/07/22/hello-world/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -933,94 +1033,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2015/05/20/python/rpc framework/" itemprop="url">
-                基于gevent的rpc框架（雏形）
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2015-05-20T10:50:16+08:00" content="2015-05-20">
-            2015-05-20
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2015/05/20/python/rpc framework/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2015/05/20/python/rpc framework/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><blockquote>
-<p><a href="https://github.com/niwho/myrpc" target="_blank" rel="external">目前还在雏形阶段</a>,使用protobuf,gevent</p>
-</blockquote>
-<p>使用示例，服务端；<br><img src="http://7xklyj.com1.z0.glb.clouddn.com/myrpcserver.png"></p>
-<p><br></p>
-<blockquote>
-<p>客户端使用wxwidget</p>
-</blockquote>
-<img src="http://7xklyj.com1.z0.glb.clouddn.com/myrpcclient.png">
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1060,7 +1072,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">27</span>
+              <span class="site-state-item-count">28</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
