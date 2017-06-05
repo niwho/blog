@@ -86,3 +86,4 @@ avatar: /uploads/avatar.jpg
 deploy:
   type: git
   repo: github:niwho/blog.git
+  branch: gh-pages
