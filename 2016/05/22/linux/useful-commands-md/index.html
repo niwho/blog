@@ -26,7 +26,7 @@
 
 
 
-  <meta name="keywords" content="awk,command,git,grep,ssh,xargs," />
+  <meta name="keywords" content="command,grep,awk,xargs,ssh,git," />
 
 
 
@@ -36,12 +36,14 @@
 
 
 <meta name="description" content="grep awk xrags ssh git">
+<meta name="keywords" content="command,grep,awk,xargs,ssh,git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="useful_commands">
 <meta property="og:url" content="http://blog.niwho.com/2016/05/22/linux/useful-commands-md/index.html">
 <meta property="og:site_name" content="niwho">
 <meta property="og:description" content="grep awk xrags ssh git">
-<meta property="og:updated_time" content="2017-05-21T18:16:19.146Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-01T06:23:20.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="useful_commands">
 <meta name="twitter:description" content="grep awk xrags ssh git">
@@ -235,7 +237,7 @@
 <h3 id="grep">grep</h3><p>grep -ERano  -A(B|C) 5 —include=”*.py” “regular_express” ./</p>
 <h3 id="awk">awk</h3><p>xxx |awk ‘{print $1}’</p>
 <h3 id="xargs">xargs</h3><p>xxxx | xargs kill</p>
-<h3 id="ssh_config">ssh config</h3><p>~/.ssh/config<br><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Host github</span><br><span class="line">    HostName github.com</span><br><span class="line">    Port 22</span><br><span class="line">    <span class="built_in">User</span> git</span><br><span class="line">    IdentityFile ~/.ssh/github</span><br></pre></td></tr></table></figure></p>
+<h3 id="ssh_config">ssh config</h3><p>~/.ssh/config<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Host github</div><div class="line">    HostName github.com</div><div class="line">   <span class="built_in"> Port </span>22</div><div class="line">   <span class="built_in"> User </span>git</div><div class="line">    IdentityFile ~/.ssh/github</div></pre></td></tr></table></figure></p>
 <p>密钥登录</p>
 <ul>
 <li>ssh-keygen -t rsa</li>
@@ -282,17 +284,17 @@
       
         <div class="post-tags">
           
-            <a href="/tags/awk/" rel="tag">#awk</a>
-          
             <a href="/tags/command/" rel="tag">#command</a>
-          
-            <a href="/tags/git/" rel="tag">#git</a>
           
             <a href="/tags/grep/" rel="tag">#grep</a>
           
-            <a href="/tags/ssh/" rel="tag">#ssh</a>
+            <a href="/tags/awk/" rel="tag">#awk</a>
           
             <a href="/tags/xargs/" rel="tag">#xargs</a>
+          
+            <a href="/tags/ssh/" rel="tag">#ssh</a>
+          
+            <a href="/tags/git/" rel="tag">#git</a>
           
         </div>
       
@@ -300,6 +302,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/23/bitcoin/" rel="prev">bitcoin</a>
             
           </div>
 
@@ -372,7 +376,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

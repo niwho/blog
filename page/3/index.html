@@ -35,15 +35,13 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description">
 <meta property="og:type" content="website">
 <meta property="og:title" content="niwho">
 <meta property="og:url" content="http://blog.niwho.com/page/3/index.html">
 <meta property="og:site_name" content="niwho">
-<meta property="og:description">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="niwho">
-<meta name="twitter:description">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -194,6 +192,97 @@
           
           
             
+              <a class="post-title-link" href="/2014/12/11/python/opencv/" itemprop="url">
+                opencv
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-12-11T10:46:22+08:00" content="2014-12-11">
+            2014-12-11
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/图像处理/" itemprop="url" rel="index"><span itemprop="name">图像处理</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/12/11/python/opencv/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/11/python/opencv/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><h3 id="安装配置">安装配置</h3><blockquote>
+<ol>
+<li>easy_install numpy</li>
+<li>sourceforge上下载 opencv,解压，将cv2.pyd复制到python 的sitepackage目录，然后(很容易疏忽)把opencv_ffmpeg2410.dll复制到系统path路径包含的任意目录，注意这里的文件名加上了opencv版本好（2.4.10）否则打开任意的视频文件都有问题(False)</li>
+</ol>
+</blockquote>
+<h3 id="使用">使用</h3><h2 id="取帧">取帧</h2><pre><code>:::python linenos=<span class="string">'table'</span> linenums=<span class="keyword">True</span>
+cap = cv2.VideoCapture(<span class="string">r'D:\PFS_Data\2014-11-21 11-49-43@jobKey-34.avi'</span>)
+<span class="keyword">print</span> cap.isOpened()
+data = cap.read()
+<span class="comment">#save to disk</span>
+cv2.imwrite(<span class="string">r'E:\hello.jpg'</span>,data[<span class="number">1</span>])
+</code></pre></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/12/07/p2p/ed2k protocol/" itemprop="url">
                 p2p 搜索
               </a>
@@ -278,6 +367,92 @@
           
           
             
+              <a class="post-title-link" href="/2014/11/27/python/pcc_rest/" itemprop="url">
+                一个简单的RESTful api
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
+            2014-11-27
+          </time>
+        </span>
+
+        
+          <span class="post-category" >
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+              &nbsp; | &nbsp;
+              <a href="/2014/11/27/python/pcc_rest/#comments" itemprop="discussionUrl">
+                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/pcc_rest/" itemprop="commentsCount"></span>
+              </a>
+            </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <blockquote>
+<p><a href="https://github.com/niwho/pcc_rest" target="_blank" rel="external">gevent+bottle实现</a></p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/11/27/python/pcc_rest/" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/11/27/python/python嵌入/" itemprop="url">
                 python 嵌入
               </a>
@@ -332,92 +507,6 @@
 </blockquote>
           <div class="post-more-link text-center">
             <a class="btn" href="/2014/11/27/python/python嵌入/" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/11/27/python/pcc_rest/" itemprop="url">
-                一个简单的RESTful api
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-11-27T16:13:10+08:00" content="2014-11-27">
-            2014-11-27
-          </time>
-        </span>
-
-        
-          <span class="post-category" >
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a></span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/11/27/python/pcc_rest/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/11/27/python/pcc_rest/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p><a href="https://github.com/niwho/pcc_rest">gevent+bottle实现</a></p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/11/27/python/pcc_rest/" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -662,7 +751,7 @@
 
       
         
-          <p>使用<a href="http://http://www.py2exe.org/">py2exe</a>，可打包为单个文件，打包后程序启动快，比pyinstaller快太多了。<br>    setup 文件示例参考<br>
+          <p>使用<a href="http://http://www.py2exe.org/" target="_blank" rel="external">py2exe</a>，可打包为单个文件，打包后程序启动快，比pyinstaller快太多了。<br>    setup 文件示例参考<br>
           <div class="post-more-link text-center">
             <a class="btn" href="/2014/06/25/python/py脚本打包/" rel="contents">
               阅读全文 &raquo;
@@ -962,77 +1051,6 @@ print <span class="function"><span class="title">GetFileMd5</span><span class="p
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/09/zookeeper/summary/" itemprop="url">
-                zookeeper summary
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-09T18:54:56+08:00" content="2014-06-09">
-            2014-06-09
-          </time>
-        </span>
-
-        
-
-        
-          
-            <span class="post-comments-count">
-              &nbsp; | &nbsp;
-              <a href="/2014/06/09/zookeeper/summary/#comments" itemprop="discussionUrl">
-                <span class="post-comments-count ds-thread-count" data-thread-key="2014/06/09/zookeeper/summary/" itemprop="commentsCount"></span>
-              </a>
-            </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><h3 id="summary">summary</h3><h5 id="wather">wather</h5><ul>
-<li>客户端watcher是同步执行的（相互之间的执行顺序一定，in order）</li>
-</ul>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1072,7 +1090,7 @@ print <span class="function"><span class="title">GetFileMd5</span><span class="p
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">33</span>
+              <span class="site-state-item-count">34</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
